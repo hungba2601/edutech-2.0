@@ -1,0 +1,17 @@
+{
+  "name": "EduTech Studio Portal",
+  "short_name": "EduTech",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff9f2",
+  "theme_color": "#0ea5e9",
+  "description": "Công cụ hỗ trợ giảng dạy tương lai số",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

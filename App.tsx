@@ -143,6 +143,7 @@ const App: React.FC = () => {
   const [isLockDialogOpen, setIsLockDialogOpen] = useState(false);
   const [lockPassword, setLockPassword] = useState('');
   const [lockError, setLockError] = useState(false);
+  const [showLockPassword, setShowLockPassword] = useState(false);
   const [isVisibilityDialogOpen, setIsVisibilityDialogOpen] = useState(false);
   // Dùng cache localStorage để hiển thị ngay lập tức, remote verify ngầm sau
   const [isPricingVisible, setIsPricingVisible] = useState<boolean>(() => {
@@ -447,21 +448,32 @@ const App: React.FC = () => {
                 <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Nhập mật khẩu để tiếp tục</p>
               </div>
             </div>
-            <input
-              type="password"
-              value={lockPassword}
-              onChange={e => { setLockPassword(e.target.value); setLockError(false); }}
-              onKeyDown={e => e.key === 'Enter' && handleLockSubmit()}
-              placeholder="Nhập mật khẩu..."
-              autoFocus
-              className={`w-full px-4 py-2.5 rounded-xl border text-sm font-medium outline-none transition-all ${
-                lockError
-                  ? 'border-red-500 bg-red-50 text-red-700 placeholder-red-400'
-                  : isDarkMode
-                    ? 'border-slate-600 bg-slate-800 text-white placeholder-slate-500 focus:border-amber-500'
-                    : 'border-slate-300 bg-slate-50 text-slate-800 placeholder-slate-400 focus:border-amber-500'
-              }`}
-            />
+            <div className="relative">
+              <input
+                type={showLockPassword ? "text" : "password"}
+                value={lockPassword}
+                onChange={e => { setLockPassword(e.target.value); setLockError(false); }}
+                onKeyDown={e => e.key === 'Enter' && handleLockSubmit()}
+                placeholder="Nhập mật khẩu..."
+                autoFocus
+                className={`w-full pl-4 pr-10 py-2.5 rounded-xl border text-sm font-medium outline-none transition-all ${
+                  lockError
+                    ? 'border-red-500 bg-red-50 text-red-700 placeholder-red-400'
+                    : isDarkMode
+                      ? 'border-slate-600 bg-slate-800 text-white placeholder-slate-500 focus:border-amber-500'
+                      : 'border-slate-300 bg-slate-50 text-slate-800 placeholder-slate-400 focus:border-amber-500'
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowLockPassword(!showLockPassword)}
+                className={`absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-md transition-colors ${
+                  isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                {showLockPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
             {lockError && (
               <div className="mt-2.5 flex items-center space-x-2 px-3 py-2 bg-red-500 text-white rounded-xl text-xs font-bold">
                 <span>❌</span>

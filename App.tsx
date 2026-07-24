@@ -408,7 +408,7 @@ const App: React.FC = () => {
       </div>
 
       {/* QR Code for Access - Top Left */}
-      <div className="fixed top-20 sm:top-24 left-2 sm:left-4 z-[60]">
+      <div className="fixed top-[105px] left-2 sm:left-4 z-[60]">
         <div className={`p-1 rounded-lg sm:rounded-xl shadow-2xl border transition-colors duration-300 ${isDarkMode ? 'bg-slate-900 border-slate-700' : 'bg-white border-green-500'}`}>
           <img 
             src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent('https://edutech-nph.vercel.app/')}`} 

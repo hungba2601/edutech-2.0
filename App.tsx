@@ -65,10 +65,11 @@ const App: React.FC = () => {
     };
     loadCounts();
 
-    // Load trạng thái hiển thị nút Bảng Giá từ remote (tập trung)
+    // Load trạng thái hiển thị nút Bảng Giá từ remote (verify ngầm, cache đã hiển thị ngay)
     const loadPricingVisibility = async () => {
       const visible = await fetchPricingVisibility();
       setIsPricingVisible(visible);
+      localStorage.setItem('_pv_cache', visible ? '1' : '0');
     };
     loadPricingVisibility();
 
@@ -143,7 +144,11 @@ const App: React.FC = () => {
   const [lockPassword, setLockPassword] = useState('');
   const [lockError, setLockError] = useState(false);
   const [isVisibilityDialogOpen, setIsVisibilityDialogOpen] = useState(false);
-  const [isPricingVisible, setIsPricingVisible] = useState<boolean>(true);
+  // Dùng cache localStorage để hiển thị ngay lập tức, remote verify ngầm sau
+  const [isPricingVisible, setIsPricingVisible] = useState<boolean>(() => {
+    const cached = localStorage.getItem('_pv_cache');
+    return cached === null ? true : cached === '1';
+  });
   const [isSavingVisibility, setIsSavingVisibility] = useState(false);
 
   const handleLockSubmit = () => {
@@ -160,6 +165,7 @@ const App: React.FC = () => {
   const handlePricingVisibility = async (visible: boolean) => {
     setIsSavingVisibility(true);
     setIsPricingVisible(visible);
+    localStorage.setItem('_pv_cache', visible ? '1' : '0'); // cập nhật cache ngay
     await savePricingVisibility(visible);
     setIsSavingVisibility(false);
     setIsVisibilityDialogOpen(false);

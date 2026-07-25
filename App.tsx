@@ -49,6 +49,7 @@ import { SalaryCalculatorModal } from './components/SalaryCalculatorModal';
 import { SimulationToolModal } from './components/SimulationToolModal';
 import { GDriveDownloaderModal } from './components/GDriveDownloaderModal';
 import { CreateContentVideoShortModal } from './components/CreateContentVideoShortModal';
+import { ApiDemoModal } from './components/ApiDemoModal';
 import { LayoutGrid, CreditCard, Youtube, Key, Sigma, Phone, FileCode, ClipboardList, Download, Sun, Moon, Table, FileSpreadsheet, PlayCircle, Code, FileText, ArrowRight, Video, Image, GraduationCap, Users, BookOpen, Target, Eye, Lock, EyeOff } from 'lucide-react';
 import { Category } from './types';
 import { fetchAppCounts, trackAppVisit, AppCounts, fetchPricingVisibility, savePricingVisibility } from './services/tracking';
@@ -134,6 +135,7 @@ const App: React.FC = () => {
   const [isSimulationToolModalOpen, setIsSimulationToolModalOpen] = useState(false);
   const [isGDriveDownloaderModalOpen, setIsGDriveDownloaderModalOpen] = useState(false);
   const [isCreateContentVideoShortModalOpen, setIsCreateContentVideoShortModalOpen] = useState(false);
+  const [isApiDemoModalOpen, setIsApiDemoModalOpen] = useState(false);
   const [activeCryptoId, setActiveCryptoId] = useState<'crypto-prediction' | 'crypto-prediction-mobile'>('crypto-prediction-mobile');
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -223,6 +225,7 @@ const App: React.FC = () => {
     setIsSimulationToolModalOpen(false);
     setIsGDriveDownloaderModalOpen(false);
     setIsCreateContentVideoShortModalOpen(false);
+    setIsApiDemoModalOpen(false);
   };
 
   const handleAppAction = (id: string) => {
@@ -578,6 +581,21 @@ const App: React.FC = () => {
               {isDarkMode ? <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
             </button>
             <InstallPWAButton />
+
+            <div className="relative group flex items-center">
+              <button
+                 onClick={() => setIsApiDemoModalOpen(true)}
+                 className="shrink-0 flex items-center space-x-1 sm:space-x-2 px-1.5 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-cyan-400 to-teal-500 text-white rounded-full font-bold shadow-md shadow-cyan-200/50 hover:scale-105 active:scale-95 transition-all text-[8.5px] sm:text-xs uppercase tracking-wider whitespace-nowrap"
+              >
+                <Key className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">API KEY DEMO</span>
+                <span className="sm:hidden max-[360px]:hidden">API DEMO</span>
+              </button>
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2.5 p-2 bg-[#dc2626] text-white text-[10px] sm:text-[11px] rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50 text-center shadow-xl pointer-events-none w-[220px] sm:w-[260px] font-bold leading-relaxed">
+                User có thể xài tạm API này để dùng cho các app trên Web. Nên tự tạo API riêng Free để xài. Xem video hd cách tạo ở cuối web
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#dc2626] rotate-45"></div>
+              </div>
+            </div>
 
             {isPricingVisible && (
               <button 
@@ -1194,6 +1212,11 @@ const App: React.FC = () => {
         isOpen={isCreateContentVideoShortModalOpen}
         onClose={() => setIsCreateContentVideoShortModalOpen(false)}
         onLogin={() => handleLoginAction('create-content-video-short')}
+      />
+      <ApiDemoModal
+        isOpen={isApiDemoModalOpen}
+        onClose={() => setIsApiDemoModalOpen(false)}
+        isDarkMode={isDarkMode}
       />
     </div>
   );

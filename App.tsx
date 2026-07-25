@@ -20,7 +20,6 @@ import { AIVirtualAssistantModal } from './components/AIVirtualAssistantModal';
 import { TextToSpeechModal } from './components/TextToSpeechModal';
 import { SlideAssistantModal } from './components/SlideAssistantModal';
 import { DesignPictureModal } from './components/DesignPictureModal';
-import { ApiKeyModal } from './components/ApiKeyModal';
 import { HWSolverModal } from './components/HWSolverModal';
 import { GoogleScriptModal } from './components/GoogleScriptModal';
 import { ATHDModal } from './components/ATHDModal';
@@ -107,7 +106,6 @@ const App: React.FC = () => {
   const [isTextToSpeechModalOpen, setIsTextToSpeechModalOpen] = useState(false);
   const [isSlideAssistantModalOpen, setIsSlideAssistantModalOpen] = useState(false);
   const [isDesignPictureModalOpen, setIsDesignPictureModalOpen] = useState(false);
-  const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState(false);
   const [isHWSolverModalOpen, setIsHWSolverModalOpen] = useState(false);
   const [isGoogleScriptModalOpen, setIsGoogleScriptModalOpen] = useState(false);
   const [isATHDModalOpen, setIsATHDModalOpen] = useState(false);
@@ -199,7 +197,6 @@ const App: React.FC = () => {
     setIsTextToSpeechModalOpen(false);
     setIsSlideAssistantModalOpen(false);
     setIsDesignPictureModalOpen(false);
-    setIsApiKeyModalOpen(false);
     setIsHWSolverModalOpen(false);
     setIsGoogleScriptModalOpen(false);
     setIsGVGModalOpen(false);
@@ -581,20 +578,6 @@ const App: React.FC = () => {
               {isDarkMode ? <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
             </button>
             <InstallPWAButton />
-            <div className="relative group flex items-center shrink-0">
-              <button 
-                onClick={() => setIsApiKeyModalOpen(true)}
-                className="flex items-center space-x-1 sm:space-x-2 px-1.5 sm:px-5 py-1.5 sm:py-2 tech-gradient text-white rounded-full font-bold shadow-md shadow-teal-200/50 hover:scale-105 active:scale-95 transition-all text-[8.5px] sm:text-xs uppercase tracking-wider whitespace-nowrap"
-              >
-                <Key className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Mã API Key Demo</span>
-                <span className="sm:hidden max-[360px]:hidden">API Demo</span>
-              </button>
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[250px] p-2.5 bg-red-600 text-white text-[10px] sm:text-xs font-medium rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50 text-center shadow-xl pointer-events-none leading-relaxed">
-                User có thể xài tạm API này để dùng cho các app trên Web. Nên tự tạo API riêng Free để xài. Xem video hd cách tạo ở cuối web
-                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-red-600 rotate-45 rounded-sm"></div>
-              </div>
-            </div>
 
             {isPricingVisible && (
               <button 
@@ -638,7 +621,7 @@ const App: React.FC = () => {
             nâng tầm sáng tạo đồ họa cho mọi nhu cầu.
           </p>
           <p className="text-red-600 font-bold text-sm sm:text-base mt-2 px-2 max-w-3xl mx-auto">
-            Lưu ý: Tất cả các app có tích hợp trí tuệ nhân tạo (AI) đều cần gắn mã API Key vào trước khi sử dụng. Mã API Key có thể lấy xài tạm ở phía trên nút API DEMO
+            Lưu ý: Tất cả các app có tích hợp trí tuệ nhân tạo (AI) đều cần gắn mã API Key vào trước khi sử dụng.
           </p>
           <p className="text-blue-700 font-bold text-sm sm:text-base mt-2 px-2 max-w-3xl mx-auto">
             Mọi người nên tự tạo mã API free cho riêng mình. Xem video hướng dẫn ở cuối Web. Nên có 3 TK mail mỗi Tk mail tạo 1 mã API để xài cho riêng mình tránh hết Quota API khi sử dụng
@@ -1076,7 +1059,6 @@ const App: React.FC = () => {
       />
       <SlideAssistantModal isOpen={isSlideAssistantModalOpen} onClose={() => setIsSlideAssistantModalOpen(false)} onLogin={() => handleLoginAction('slide-assistant')} />
       <DesignPictureModal isOpen={isDesignPictureModalOpen} onClose={() => setIsDesignPictureModalOpen(false)} onLogin={() => handleLoginAction('design-picture-studio')} />
-      <ApiKeyModal isOpen={isApiKeyModalOpen} onClose={() => setIsApiKeyModalOpen(false)} />
       <HWSolverModal 
         isOpen={isHWSolverModalOpen} 
         onClose={() => setIsHWSolverModalOpen(false)} 

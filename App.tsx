@@ -561,15 +561,15 @@ const App: React.FC = () => {
 
       <nav className={`fixed top-0 left-0 w-full z-50 backdrop-blur-md border-b transition-colors duration-300 ${isDarkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white/70 border-green-100'}`}>
         <div className="max-w-7xl mx-auto px-2 sm:px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center space-x-1 shrink-0">
-            <div className="w-5 h-5 sm:w-8 sm:h-8 tech-gradient rounded-md sm:rounded-lg flex items-center justify-center text-white font-black text-xs sm:text-xl shadow-sm">E</div>
+          <div className="flex items-center space-x-2 shrink-0">
+            <div className="w-7 h-7 sm:w-10 sm:h-10 tech-gradient rounded-lg sm:rounded-xl flex items-center justify-center text-white font-black text-sm sm:text-2xl shadow-md border border-white/20">E</div>
             <div className="flex items-baseline">
-              <span className="font-outfit font-black tech-gradient bg-clip-text text-transparent tracking-tight uppercase text-[10px] sm:text-lg">EduTech</span>
-              <span className={`font-outfit font-black ml-1 hidden sm:block tracking-tight uppercase text-xs sm:text-sm transition-colors ${isDarkMode ? 'text-white' : 'text-slate-800 opacity-80'}`}>Studio</span>
+              <span className="font-outfit font-black tech-gradient bg-clip-text text-transparent tracking-tight uppercase text-sm sm:text-2xl md:text-3xl drop-shadow-sm">EduTech</span>
+              <span className={`font-outfit font-black ml-1 sm:ml-2 tracking-tight uppercase text-xs sm:text-lg md:text-xl transition-colors ${isDarkMode ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]' : 'text-slate-800 opacity-90 drop-shadow-sm'}`}>Studio</span>
             </div>
           </div>
 
-          <div className="flex items-center justify-end space-x-0.5 sm:space-x-2 w-full pl-0">
+          <div className="flex items-center justify-end space-x-1 sm:space-x-3 w-full pl-0">
             <button 
               onClick={() => setIsDarkMode(!isDarkMode)}
               className={`shrink-0 p-1 sm:p-2 rounded-full transition-all active:scale-90 ${isDarkMode ? 'bg-slate-800 text-yellow-400' : 'bg-slate-100 text-slate-600'}`}

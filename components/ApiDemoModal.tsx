@@ -15,9 +15,7 @@ export const ApiDemoModal: React.FC<ApiDemoModalProps> = ({ isOpen, onClose, isD
   const apiKeys = [
     "AIzaSyBH0yJTV5Hy16iGxEBvP-6Hmb-ZC6ApGCo",
     "AIzaSyC0i5ietdrXztfQRTP4fDxIElorHx6aOsQ",
-    "AIzaSyDCRCo4amvV6Tg7S15tYX9ERDRo2OzGQFg",
-    "AIzaSyBG5xoi579uhr1_HxbY1K4k78C8ezYNaPg",
-    "AQ.Ab8RN6J0bBZIzs3QwHqs7EsjUlK9Q_QboEmFUfFoME85n_btHg"
+    "AIzaSyDCRCo4amvV6Tg7S15tYX9ERDRo2OzGQFg"
   ];
 
   const handleCopy = (key: string, index: number) => {

@@ -67,7 +67,7 @@ const App: React.FC = () => {
       if (!pendingText) return;
       const audio = new Audio('/amthanh.wav');
       audio.play().then(() => {
-        localStorage.setItem('last_sound_notification', pendingText);
+        sessionStorage.setItem('sound_played_this_session', '1');
         pendingNotificationSound.current = null;
       }).catch(() => {});
     };
@@ -98,15 +98,14 @@ const App: React.FC = () => {
         const lastSeen = localStorage.getItem('last_seen_notification');
         if (text !== lastSeen) {
           setHasNewNotification(true);
-
-          // Đánh dấu cần phát âm thanh (chỉ 1 lần cho mỗi thông báo mới)
-          const lastSoundPlayed = localStorage.getItem('last_sound_notification');
-          if (text !== lastSoundPlayed) {
+          // Phát âm thanh mỗi lần mở web nếu chưa đọc thông báo (chỉ 1 lần/session)
+          const alreadyPlayedThisSession = sessionStorage.getItem('sound_played_this_session');
+          if (!alreadyPlayedThisSession) {
             pendingNotificationSound.current = text;
             // Thử phát ngay (nếu user đã tương tác trước đó)
             const audio = new Audio('/amthanh.wav');
             audio.play().then(() => {
-              localStorage.setItem('last_sound_notification', text);
+              sessionStorage.setItem('sound_played_this_session', '1');
               pendingNotificationSound.current = null;
             }).catch(() => {
               // Autoplay bị chặn — chờ user click/touch/keydown (listener đã đăng ký ở trên)

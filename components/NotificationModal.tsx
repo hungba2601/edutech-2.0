@@ -35,7 +35,7 @@ export const NotificationModal: React.FC<NotificationModalProps> = ({ isOpen, on
         </div>
         
         <div className="p-6">
-          <p className="text-lg font-bold text-red-600 text-center">
+          <p className="text-base sm:text-lg font-bold text-red-600 text-left whitespace-pre-wrap">
             {text || "Không có thông báo mới."}
           </p>
         </div>

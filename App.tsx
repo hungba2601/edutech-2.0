@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { APP_CATEGORIES } from './constants';
 import { CategorySection } from './components/CategorySection';
 import { WelcomeModal } from './components/WelcomeModal';
@@ -57,9 +57,26 @@ import { fetchAppCounts, trackAppVisit, AppCounts, fetchPricingVisibility, saveP
 
 const App: React.FC = () => {
   const [appCounts, setAppCounts] = useState<AppCounts>({});
+  const pendingNotificationSound = useRef<string | null>(null);
   
   // Load số liệu từ Google Sheet khi App khởi chạy
   React.useEffect(() => {
+    // Listener phát âm thanh khi user tương tác — đăng ký NGAY trước mọi async call
+    const playPendingSound = () => {
+      const pendingText = pendingNotificationSound.current;
+      if (!pendingText) return;
+      const audio = new Audio('/amthanh.wav');
+      audio.play().then(() => {
+        localStorage.setItem('last_sound_notification', pendingText);
+        pendingNotificationSound.current = null;
+      }).catch(() => {});
+    };
+    // Dùng capture phase (true) để bắt MỌI click/tap trước khi component nào stopPropagation
+    document.addEventListener('click', playPendingSound, true);
+    document.addEventListener('touchstart', playPendingSound, true);
+    document.addEventListener('keydown', playPendingSound, true);
+    document.addEventListener('pointerdown', playPendingSound, true);
+
     const loadCounts = async () => {
       const counts = await fetchAppCounts();
       setAppCounts(counts);
@@ -81,6 +98,20 @@ const App: React.FC = () => {
         const lastSeen = localStorage.getItem('last_seen_notification');
         if (text !== lastSeen) {
           setHasNewNotification(true);
+
+          // Đánh dấu cần phát âm thanh (chỉ 1 lần cho mỗi thông báo mới)
+          const lastSoundPlayed = localStorage.getItem('last_sound_notification');
+          if (text !== lastSoundPlayed) {
+            pendingNotificationSound.current = text;
+            // Thử phát ngay (nếu user đã tương tác trước đó)
+            const audio = new Audio('/amthanh.wav');
+            audio.play().then(() => {
+              localStorage.setItem('last_sound_notification', text);
+              pendingNotificationSound.current = null;
+            }).catch(() => {
+              // Autoplay bị chặn — chờ user click/touch/keydown (listener đã đăng ký ở trên)
+            });
+          }
         }
       }
     };
@@ -91,6 +122,13 @@ const App: React.FC = () => {
       trackAppVisit('LƯỢT TRUY CẬP WEB');
       sessionStorage.setItem('website_visited', 'true');
     }
+
+    return () => {
+      document.removeEventListener('click', playPendingSound, true);
+      document.removeEventListener('touchstart', playPendingSound, true);
+      document.removeEventListener('keydown', playPendingSound, true);
+      document.removeEventListener('pointerdown', playPendingSound, true);
+    };
   }, []);
 
   // Helper để lấy tên App từ ID
@@ -599,15 +637,15 @@ const App: React.FC = () => {
                     localStorage.setItem('last_seen_notification', notificationText);
                   }
                 }}
-                className={`shrink-0 p-1 sm:p-2 rounded-full transition-all active:scale-90 ${isDarkMode ? 'bg-slate-800 text-slate-300 hover:text-white' : 'bg-slate-100 text-slate-600 hover:text-slate-900'}`}
+                className={`shrink-0 p-1 sm:p-2 rounded-full transition-all active:scale-90 ${hasNewNotification ? 'bell-notify' : ''} ${isDarkMode ? 'bg-slate-800 text-slate-300 hover:text-white' : 'bg-slate-100 text-slate-600 hover:text-slate-900'}`}
                 title="Thông báo"
               >
-                <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Bell className={`w-4 h-4 sm:w-5 sm:h-5 bell-icon`} />
               </button>
               {hasNewNotification && (
-                <span className="absolute top-0 right-0 flex h-2.5 w-2.5 sm:h-3 sm:w-3 mt-0.5 mr-0.5">
+                <span className="absolute -top-1 -right-1 flex h-4 w-4 sm:h-5 sm:w-5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 sm:h-3 sm:w-3 bg-red-500 text-[7px] sm:text-[8px] text-white font-bold items-center justify-center">1</span>
+                  <span className="relative inline-flex rounded-full h-4 w-4 sm:h-5 sm:w-5 bg-red-500 text-[8px] sm:text-[10px] text-white font-black items-center justify-center shadow-lg shadow-red-500/50">1</span>
                 </span>
               )}
             </div>

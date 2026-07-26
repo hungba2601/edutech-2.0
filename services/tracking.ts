@@ -82,3 +82,20 @@ export const savePricingVisibility = async (visible: boolean): Promise<void> => 
     console.error('Lỗi khi lưu trạng thái pricing:', error);
   }
 };
+
+/**
+ * Lấy nội dung thông báo từ Google Sheet (ô E1).
+ */
+export const fetchNotification = async (): Promise<string> => {
+  if (!GOOGLE_SHEET_API_URL) return "";
+  try {
+    const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=getNotification&t=${Date.now()}`);
+    if (response.ok) {
+      const data = await response.json();
+      return data.text || "";
+    }
+  } catch (error) {
+    console.error('Lỗi khi lấy thông báo:', error);
+  }
+  return "";
+};

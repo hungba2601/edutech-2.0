@@ -84,6 +84,15 @@ export const APP_CATEGORIES: Category[] = [
         isGifted: true
       },
       {
+        id: 'skkn-review',
+        title: 'APP THẨM ĐỊNH VÀ TỰ ĐỘNG CHỈNH SỬA HOÀN CHỈNH SKKN',
+        icon: <ShieldCheck className="w-8 h-8" />,
+        color: 'bg-indigo-600',
+        description: 'Tự động hóa thẩm định, đánh giá và hoàn thiện bài viết sáng kiến kinh nghiệm chuyên sâu.',
+        isGifted: true,
+        videoUrl: 'https://youtu.be/PVAT21m5drA'
+      },
+      {
         id: 'biology-sim',
         title: 'MÔ PHỎNG SINH HỌC',
         icon: <Microscope className="w-8 h-8" />,
@@ -288,15 +297,6 @@ export const APP_CATEGORIES: Category[] = [
         description: 'Chuyển đổi văn bản thành giọng nói tự nhiên với nhiều tùy chọn giọng đọc AI.',
         isNew: true,
         isFree: true
-      },
-      {
-        id: 'skkn-review',
-        title: 'APP THẨM ĐỊNH VÀ TỰ ĐỘNG CHỈNH SỬA HOÀN CHỈNH SKKN',
-        icon: <ShieldCheck className="w-8 h-8" />,
-        color: 'bg-indigo-600',
-        description: 'Tự động hóa thẩm định, đánh giá và hoàn thiện bài viết sáng kiến kinh nghiệm chuyên sâu.',
-        isGifted: true,
-        videoUrl: 'https://youtu.be/PVAT21m5drA'
       },
       {
         id: 'image-to-excel',

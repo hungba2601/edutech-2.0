@@ -50,9 +50,10 @@ import { SimulationToolModal } from './components/SimulationToolModal';
 import { GDriveDownloaderModal } from './components/GDriveDownloaderModal';
 import { CreateContentVideoShortModal } from './components/CreateContentVideoShortModal';
 import { ApiDemoModal } from './components/ApiDemoModal';
-import { LayoutGrid, CreditCard, Youtube, Key, Sigma, Phone, FileCode, ClipboardList, Download, Sun, Moon, Table, FileSpreadsheet, PlayCircle, Code, FileText, ArrowRight, Video, Image, GraduationCap, Users, BookOpen, Target, Eye, Lock, EyeOff } from 'lucide-react';
+import { NotificationModal } from './components/NotificationModal';
+import { LayoutGrid, CreditCard, Youtube, Key, Sigma, Phone, FileCode, ClipboardList, Download, Sun, Moon, Table, FileSpreadsheet, PlayCircle, Code, FileText, ArrowRight, Video, Image, GraduationCap, Users, BookOpen, Target, Eye, Lock, EyeOff, Bell } from 'lucide-react';
 import { Category } from './types';
-import { fetchAppCounts, trackAppVisit, AppCounts, fetchPricingVisibility, savePricingVisibility } from './services/tracking';
+import { fetchAppCounts, trackAppVisit, AppCounts, fetchPricingVisibility, savePricingVisibility, fetchNotification } from './services/tracking';
 
 const App: React.FC = () => {
   const [appCounts, setAppCounts] = useState<AppCounts>({});
@@ -72,6 +73,18 @@ const App: React.FC = () => {
       localStorage.setItem('_pv_cache', visible ? '1' : '0');
     };
     loadPricingVisibility();
+
+    const loadNotification = async () => {
+      const text = await fetchNotification();
+      if (text) {
+        setNotificationText(text);
+        const lastSeen = localStorage.getItem('last_seen_notification');
+        if (text !== lastSeen) {
+          setHasNewNotification(true);
+        }
+      }
+    };
+    loadNotification();
 
     // Track website visit once per session
     if (!sessionStorage.getItem('website_visited')) {
@@ -136,6 +149,9 @@ const App: React.FC = () => {
   const [isGDriveDownloaderModalOpen, setIsGDriveDownloaderModalOpen] = useState(false);
   const [isCreateContentVideoShortModalOpen, setIsCreateContentVideoShortModalOpen] = useState(false);
   const [isApiDemoModalOpen, setIsApiDemoModalOpen] = useState(false);
+  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+  const [notificationText, setNotificationText] = useState("");
+  const [hasNewNotification, setHasNewNotification] = useState(false);
   const [activeCryptoId, setActiveCryptoId] = useState<'crypto-prediction' | 'crypto-prediction-mobile'>('crypto-prediction-mobile');
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -226,6 +242,7 @@ const App: React.FC = () => {
     setIsGDriveDownloaderModalOpen(false);
     setIsCreateContentVideoShortModalOpen(false);
     setIsApiDemoModalOpen(false);
+    setIsNotificationModalOpen(false);
   };
 
   const handleAppAction = (id: string) => {
@@ -573,6 +590,27 @@ const App: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-end space-x-1 sm:space-x-3 w-full pl-0">
+            <div className="relative">
+              <button 
+                onClick={() => {
+                  setIsNotificationModalOpen(true);
+                  if (hasNewNotification) {
+                    setHasNewNotification(false);
+                    localStorage.setItem('last_seen_notification', notificationText);
+                  }
+                }}
+                className={`shrink-0 p-1 sm:p-2 rounded-full transition-all active:scale-90 ${isDarkMode ? 'bg-slate-800 text-slate-300 hover:text-white' : 'bg-slate-100 text-slate-600 hover:text-slate-900'}`}
+                title="Thông báo"
+              >
+                <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+              {hasNewNotification && (
+                <span className="absolute top-0 right-0 flex h-2.5 w-2.5 sm:h-3 sm:w-3 mt-0.5 mr-0.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 sm:h-3 sm:w-3 bg-red-500 text-[7px] sm:text-[8px] text-white font-bold items-center justify-center">1</span>
+                </span>
+              )}
+            </div>
             <button 
               onClick={() => setIsDarkMode(!isDarkMode)}
               className={`shrink-0 p-1 sm:p-2 rounded-full transition-all active:scale-90 ${isDarkMode ? 'bg-slate-800 text-yellow-400' : 'bg-slate-100 text-slate-600'}`}
@@ -1216,6 +1254,12 @@ const App: React.FC = () => {
       <ApiDemoModal
         isOpen={isApiDemoModalOpen}
         onClose={() => setIsApiDemoModalOpen(false)}
+        isDarkMode={isDarkMode}
+      />
+      <NotificationModal
+        isOpen={isNotificationModalOpen}
+        onClose={() => setIsNotificationModalOpen(false)}
+        text={notificationText}
         isDarkMode={isDarkMode}
       />
     </div>

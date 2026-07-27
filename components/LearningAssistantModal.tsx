@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { X, Sparkles, Book, MousePointer2, Key, Star, GraduationCap } from 'lucide-react';
+import { X, Sparkles, Book, MousePointer2, Key, Star, GraduationCap, Youtube } from 'lucide-react';
 
 interface LearningAssistantModalProps {
   isOpen: boolean;
@@ -99,7 +99,16 @@ export const LearningAssistantModal: React.FC<LearningAssistantModalProps> = ({ 
         </div>
 
         {/* Footer Action - Dark Navy Button as in Image */}
-        <div className="p-8 pt-2 pb-10 flex justify-center bg-white">
+        <div className="p-8 pt-2 pb-10 flex flex-col space-y-3 justify-center bg-white">
+          <a 
+            href="https://youtu.be/Z2lM0bvPsss"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-4 bg-red-600 hover:bg-red-700 text-white font-black rounded-3xl shadow-lg transition-all active:scale-95 uppercase tracking-[0.15em] text-sm flex items-center justify-center space-x-2"
+          >
+            <Youtube className="w-5 h-5" />
+            <span>XEM VIDEO HD</span>
+          </a>
           <button 
             onClick={onLogin}
             className="w-full py-5 bg-[#0f172a] hover:bg-black text-white font-black rounded-3xl shadow-2xl transition-all active:scale-95 uppercase tracking-[0.15em] text-sm"

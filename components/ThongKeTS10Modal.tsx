@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, BookOpen, Download, Calculator, BarChart3, Info } from 'lucide-react';
+import { X, BookOpen, Download, Calculator, BarChart3, Info, Youtube } from 'lucide-react';
 
 interface ThongKeTS10ModalProps {
   isOpen: boolean;
@@ -84,7 +84,16 @@ export const ThongKeTS10Modal: React.FC<ThongKeTS10ModalProps> = ({ isOpen, onCl
         </div>
 
         {/* Footer Action */}
-        <div className="p-6 md:p-8 pt-4 pb-8 bg-white border-t border-slate-50">
+        <div className="p-6 md:p-8 pt-4 pb-8 bg-white border-t border-slate-50 flex flex-col space-y-3">
+          <a 
+            href="https://youtu.be/xAmJ88DwxHs"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-4 bg-red-600 hover:bg-red-700 text-white font-black rounded-3xl shadow-lg transition-all active:scale-95 uppercase tracking-[0.15em] text-sm flex items-center justify-center space-x-2"
+          >
+            <Youtube className="w-5 h-5" />
+            <span>XEM VIDEO HD</span>
+          </a>
           <button 
             onClick={onLogin}
             className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-3xl shadow-lg shadow-emerald-200 transition-all active:scale-95 uppercase tracking-[0.15em] text-sm md:text-base"

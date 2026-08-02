@@ -49,6 +49,7 @@ import { SalaryCalculatorModal } from './components/SalaryCalculatorModal';
 import { SimulationToolModal } from './components/SimulationToolModal';
 import { GDriveDownloaderModal } from './components/GDriveDownloaderModal';
 import { CreateContentVideoShortModal } from './components/CreateContentVideoShortModal';
+import { ThongKeTS10Modal } from './components/ThongKeTS10Modal';
 
 import { NotificationModal } from './components/NotificationModal';
 import { LayoutGrid, CreditCard, Youtube, Key, Sigma, Phone, FileCode, ClipboardList, Download, Sun, Moon, Table, FileSpreadsheet, PlayCircle, Code, FileText, ArrowRight, Video, Image, GraduationCap, Users, BookOpen, Target, Eye, Lock, EyeOff, Bell } from 'lucide-react';
@@ -185,6 +186,7 @@ const App: React.FC = () => {
   const [isSimulationToolModalOpen, setIsSimulationToolModalOpen] = useState(false);
   const [isGDriveDownloaderModalOpen, setIsGDriveDownloaderModalOpen] = useState(false);
   const [isCreateContentVideoShortModalOpen, setIsCreateContentVideoShortModalOpen] = useState(false);
+  const [isThongKeTS10ModalOpen, setIsThongKeTS10ModalOpen] = useState(false);
 
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const [notificationText, setNotificationText] = useState("");
@@ -278,6 +280,7 @@ const App: React.FC = () => {
     setIsSimulationToolModalOpen(false);
     setIsGDriveDownloaderModalOpen(false);
     setIsCreateContentVideoShortModalOpen(false);
+    setIsThongKeTS10ModalOpen(false);
 
     setIsNotificationModalOpen(false);
   };
@@ -384,6 +387,8 @@ const App: React.FC = () => {
       setIsGDriveDownloaderModalOpen(true);
     } else if (id === 'create-content-video-short') {
       setIsCreateContentVideoShortModalOpen(true);
+    } else if (id === 'thongke-ts10') {
+      setIsThongKeTS10ModalOpen(true);
     }
   };
 
@@ -434,7 +439,8 @@ const App: React.FC = () => {
       'salary-calculator': 'https://tool-tinhluong.vercel.app/',
       'simulation-tool': 'https://tool-mophong.vercel.app/',
       'gdrive-unblock-downloader': 'https://drive.google.com/drive/folders/1E4Z7ViVzc9GnrUzDHfXyehggiShotCmI?usp=sharing',
-      'create-content-video-short': 'https://drive.google.com/drive/folders/1CGCMZZp8ff9J7FR6nh6V3s009RKfqPjI?usp=sharing'
+      'create-content-video-short': 'https://drive.google.com/drive/folders/1CGCMZZp8ff9J7FR6nh6V3s009RKfqPjI?usp=sharing',
+      'thongke-ts10': 'https://tool-thongke-ts10.vercel.app/'
     };
 
     if (links[id]) {
@@ -1274,6 +1280,11 @@ const App: React.FC = () => {
         isOpen={isCreateContentVideoShortModalOpen}
         onClose={() => setIsCreateContentVideoShortModalOpen(false)}
         onLogin={() => handleLoginAction('create-content-video-short')}
+      />
+      <ThongKeTS10Modal
+        isOpen={isThongKeTS10ModalOpen}
+        onClose={() => setIsThongKeTS10ModalOpen(false)}
+        onLogin={() => handleLoginAction('thongke-ts10')}
       />
 
       <NotificationModal

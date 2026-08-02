@@ -444,6 +444,17 @@ export const APP_CATEGORIES: Category[] = [
         buttonLabel: 'Tải tiện ích',
         secondaryLabel: 'Hướng dẫn',
         videoUrl: 'https://youtu.be/k6Z3e_U_VV8'
+      },
+      {
+        id: 'thongke-ts10',
+        title: 'CÔNG CỤ THỐNG KÊ TUYỂN SINH 10 CHI TIẾT',
+        icon: <Table className="w-8 h-8" />,
+        color: 'bg-emerald-600',
+        description: 'Công cụ thống kê kết quả thi tuyển sinh lớp 10 chi tiết.',
+        isNew: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn'
       }
     ]
   },

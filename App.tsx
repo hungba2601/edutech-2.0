@@ -637,13 +637,6 @@ const App: React.FC = () => {
           <div className="flex items-center justify-end space-x-1 sm:space-x-3 w-full pl-0">
             <div className="relative">
               <button 
-                onPointerDown={() => {
-                  // Clear pending sound SYNCHRONOUSLY before capture-phase listeners
-                  // fire audio.play() — prevents gesture from being "consumed" by autoplay
-                  if (pendingNotificationSound.current) {
-                    pendingNotificationSound.current = null;
-                  }
-                }}
                 onClick={() => {
                   setIsNotificationModalOpen(true);
                   if (hasNewNotification) {
@@ -657,7 +650,7 @@ const App: React.FC = () => {
                 <Bell className={`w-4 h-4 sm:w-5 sm:h-5 bell-icon`} />
               </button>
               {hasNewNotification && (
-                <span className="absolute -top-1 -right-1 flex h-4 w-4 sm:h-5 sm:w-5">
+                <span className="absolute -top-1 -right-1 flex h-4 w-4 sm:h-5 sm:w-5 pointer-events-none">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-4 w-4 sm:h-5 sm:w-5 bg-red-500 text-[8px] sm:text-[10px] text-white font-black items-center justify-center shadow-lg shadow-red-500/50">1</span>
                 </span>

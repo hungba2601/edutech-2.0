@@ -66,17 +66,21 @@ const App: React.FC = () => {
     const playPendingSound = () => {
       const pendingText = pendingNotificationSound.current;
       if (!pendingText) return;
-      const audio = new Audio('/amthanh.wav');
-      audio.play().then(() => {
-        sessionStorage.setItem('sound_played_this_session', '1');
-        pendingNotificationSound.current = null;
-      }).catch(() => {});
+      // Clear ref SYNCHRONOUSLY to prevent duplicate fires from multiple event types
+      pendingNotificationSound.current = null;
+      // Defer audio.play() so the current user gesture is available for
+      // the actual button click handler (React onClick) first
+      setTimeout(() => {
+        const audio = new Audio('/amthanh.wav');
+        audio.play().then(() => {
+          sessionStorage.setItem('sound_played_this_session', '1');
+        }).catch(() => {});
+      }, 0);
     };
-    // Dùng capture phase (true) để bắt MỌI click/tap trước khi component nào stopPropagation
+    // Only 'click' + 'keydown' — no touchstart/pointerdown to avoid
+    // duplicate fires on mobile (click fires for touch too)
     document.addEventListener('click', playPendingSound, true);
-    document.addEventListener('touchstart', playPendingSound, true);
     document.addEventListener('keydown', playPendingSound, true);
-    document.addEventListener('pointerdown', playPendingSound, true);
 
     const loadCounts = async () => {
       const counts = await fetchAppCounts();
@@ -125,9 +129,7 @@ const App: React.FC = () => {
 
     return () => {
       document.removeEventListener('click', playPendingSound, true);
-      document.removeEventListener('touchstart', playPendingSound, true);
       document.removeEventListener('keydown', playPendingSound, true);
-      document.removeEventListener('pointerdown', playPendingSound, true);
     };
   }, []);
 
@@ -635,6 +637,13 @@ const App: React.FC = () => {
           <div className="flex items-center justify-end space-x-1 sm:space-x-3 w-full pl-0">
             <div className="relative">
               <button 
+                onPointerDown={() => {
+                  // Clear pending sound SYNCHRONOUSLY before capture-phase listeners
+                  // fire audio.play() — prevents gesture from being "consumed" by autoplay
+                  if (pendingNotificationSound.current) {
+                    pendingNotificationSound.current = null;
+                  }
+                }}
                 onClick={() => {
                   setIsNotificationModalOpen(true);
                   if (hasNewNotification) {

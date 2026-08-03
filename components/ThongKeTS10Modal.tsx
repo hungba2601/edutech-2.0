@@ -86,7 +86,7 @@ export const ThongKeTS10Modal: React.FC<ThongKeTS10ModalProps> = ({ isOpen, onCl
         {/* Footer Action */}
         <div className="p-6 md:p-8 pt-4 pb-8 bg-white border-t border-slate-50 flex flex-col space-y-3">
           <a 
-            href="https://youtu.be/xAmJ88DwxHs"
+            href="https://youtu.be/zXt2SmAtTG0"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full py-4 bg-red-600 hover:bg-red-700 text-white font-black rounded-3xl shadow-lg transition-all active:scale-95 uppercase tracking-[0.15em] text-sm flex items-center justify-center space-x-2"

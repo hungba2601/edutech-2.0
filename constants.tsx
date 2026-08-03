@@ -76,6 +76,15 @@ export const APP_CATEGORIES: Category[] = [
         videoUrl: 'https://www.youtube.com/watch?v=wWkUbTdy6wc'
       },
       {
+        id: 'gvg-assistant',
+        title: 'TOOL VIẾT BIỆN PHÁP GVG/GVCNG + SKKN + THẨM ĐỊNH VÀ HOÀN CHỈNH',
+        icon: <FileText className="w-8 h-8" />,
+        color: 'bg-orange-500',
+        description: 'Công cụ giúp viết biện pháp khi thi GVG hoặc GVCN Giỏi từ A-Z. từ khâu chọn đề tài đến hết. Có thể mô tả ý để Ai viết theo',
+        isNew: true,
+        isHot: true
+      },
+      {
         id: 'skkn-ai',
         title: 'APP VIẾT SÁNG KIẾN KINH NGHIỆM (SKKN)',
         icon: <ClipboardList className="w-8 h-8" />,
@@ -117,15 +126,6 @@ export const APP_CATEGORIES: Category[] = [
         description: 'Tự động tạo bài thuyết trình chuyên nghiệp từ nội dung văn bản chỉ trong vài giây.',
         isFree: true,
         isNew: true
-      },
-      {
-        id: 'gvg-assistant',
-        title: 'TOOL VIẾT BIỆN PHÁP GVG/GVCNG + SKKN + THẨM ĐỊNH VÀ HOÀN CHỈNH',
-        icon: <FileText className="w-8 h-8" />,
-        color: 'bg-orange-500',
-        description: 'Công cụ giúp viết biện pháp khi thi GVG hoặc GVCN Giỏi từ A-Z. từ khâu chọn đề tài đến hết. Có thể mô tả ý để Ai viết theo',
-        isNew: true,
-        isHot: true
       },
       {
         id: 'exam-shuffler-ai',
@@ -268,6 +268,29 @@ export const APP_CATEGORIES: Category[] = [
     description: 'Các công cụ hữu ích giúp đơn giản hóa công việc văn phòng và xử lý dữ liệu.',
     apps: [
       {
+        id: 'hw-solver',
+        title: 'TIỆN ÍCH TỰ ĐỘNG GIẢI TN+TL TRÊN CÁC TRANG WEB',
+        icon: <Sparkles className="w-8 h-8" />,
+        color: 'bg-indigo-500',
+        description: 'TIỆN ÍCH GIẢI BÀI TẬP TN+TL TẤT CẢ CÁC TRANG WEB . ĐẶC BIỆT LÀ TRANG BDTX.',
+        isNew: true,
+        isHot: true,
+        buttonLabel: 'Tải tiện ích',
+        videoUrl: 'https://youtu.be/8_QOQBYmnKg'
+      },
+      {
+        id: 'auto-comment-utility',
+        title: 'TIỆN ÍCH TỰ ĐỘNG NHẬN XÉT HK & HỌC BẠ CÁC MÔN HỌC',
+        icon: <ClipboardList className="w-8 h-8" />,
+        color: 'bg-indigo-500',
+        description: 'Tiện ích hỗ trợ giáo viên tự động nhận xét học kỳ và học bạ cho các môn học nhanh chóng và chính xác.',
+        isNew: true,
+        isHot: true,
+        buttonLabel: 'Tải tiện ích',
+        secondaryLabel: 'Xem hướng dẫn',
+        videoUrl: 'https://youtu.be/nYbso-lv6Nk'
+      },
+      {
         id: 'print-pro',
         title: 'CÔNG CỤ HỖ TRỢ IN ẤN PRO',
         icon: <Printer className="w-8 h-8" />,
@@ -306,29 +329,7 @@ export const APP_CATEGORIES: Category[] = [
         description: 'Trích xuất dữ liệu từ hình ảnh bảng biểu sang định dạng Excel chính xác cao.',
         isFree: true
       },
-      {
-        id: 'hw-solver',
-        title: 'TIỆN ÍCH TỰ ĐỘNG GIẢI TN+TL TRÊN CÁC TRANG WEB',
-        icon: <Sparkles className="w-8 h-8" />,
-        color: 'bg-indigo-500',
-        description: 'TIỆN ÍCH GIẢI BÀI TẬP TN+TL TẤT CẢ CÁC TRANG WEB . ĐẶC BIỆT LÀ TRANG BDTX.',
-        isNew: true,
-        isHot: true,
-        buttonLabel: 'Tải tiện ích',
-        videoUrl: 'https://youtu.be/8_QOQBYmnKg'
-      },
-      {
-        id: 'auto-comment-utility',
-        title: 'TIỆN ÍCH TỰ ĐỘNG NHẬN XÉT HK & HỌC BẠ CÁC MÔN HỌC',
-        icon: <ClipboardList className="w-8 h-8" />,
-        color: 'bg-indigo-500',
-        description: 'Tiện ích hỗ trợ giáo viên tự động nhận xét học kỳ và học bạ cho các môn học nhanh chóng và chính xác.',
-        isNew: true,
-        isHot: true,
-        buttonLabel: 'Tải tiện ích',
-        secondaryLabel: 'Xem hướng dẫn',
-        videoUrl: 'https://youtu.be/nYbso-lv6Nk'
-      },
+
       {
         id: 'extension-youtube',
         title: 'EXTENSION DOWLOAD VIDEO YOUTUBE',

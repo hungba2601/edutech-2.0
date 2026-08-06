@@ -559,6 +559,18 @@ export const APP_CATEGORIES: Category[] = [
         isFree: true,
         buttonLabel: 'Đăng nhập',
         secondaryLabel: 'Hướng dẫn'
+      },
+      {
+        id: 'pension-calculator-154',
+        title: 'CÔNG CỤ TÍNH LƯƠNG HƯU THEO NGHỊ ĐỊNH 154',
+        icon: <FileSpreadsheet className="w-8 h-8" />,
+        color: 'bg-blue-600',
+        description: 'CÔNG CỤ GIÚP TÍNH LƯƠNG HƯU NGHỈ TRƯỚC TUỔI , NGHỈ NGAY THEO NĐ 154.',
+        isNew: true,
+        isHot: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn'
       }
     ]
   }

@@ -1298,7 +1298,7 @@ const App: React.FC = () => {
         isOpen={isPensionCalculator154ModalOpen}
         onClose={() => setIsPensionCalculator154ModalOpen(false)}
         onLogin={() => handleLoginAction('pension-calculator-154')}
-        videoUrl="#"
+        videoUrl="https://youtu.be/V-8Z-40VND8"
       />
 
       <NotificationModal

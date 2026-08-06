@@ -1,5 +1,5 @@
-import React from 'react';
-import { X, LogIn, PlayCircle, FileSpreadsheet, Sparkles, Smartphone, Share, MoreVertical } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, LogIn, PlayCircle, FileSpreadsheet, Sparkles, Smartphone, Share, MoreVertical, Copy, Check } from 'lucide-react';
 
 interface PensionCalculator154ModalProps {
   isOpen: boolean;
@@ -9,6 +9,15 @@ interface PensionCalculator154ModalProps {
 }
 
 export const PensionCalculator154Modal: React.FC<PensionCalculator154ModalProps> = ({ isOpen, onClose, onLogin, videoUrl }) => {
+  const [copied, setCopied] = useState(false);
+  const appLink = 'https://tinh-luong-huu.vercel.app/';
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(appLink);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -71,12 +80,38 @@ export const PensionCalculator154Modal: React.FC<PensionCalculator154ModalProps>
 
           {/* Installation Instructions */}
           <div className="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
-            <div className="flex items-center justify-between border-l-4 border-blue-600 pl-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-l-4 border-blue-600 pl-3">
               <div className="flex items-center space-x-2">
                 <Smartphone className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 <h3 className="text-lg font-black text-slate-800 dark:text-white uppercase tracking-wide">
                   HƯỚNG DẪN CÀI ĐẠT THÀNH APP MOBILE
                 </h3>
+              </div>
+              
+              <div className="flex items-center bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-1 shadow-sm w-full sm:w-auto max-w-sm">
+                <div className="px-3 py-1.5 text-sm text-slate-600 dark:text-slate-400 font-medium truncate flex-1 select-all">
+                  {appLink}
+                </div>
+                <button
+                  onClick={handleCopyLink}
+                  className={`flex items-center space-x-1 px-3 py-1.5 rounded-lg text-sm font-bold transition-all ${
+                    copied 
+                      ? 'bg-emerald-500 text-white' 
+                      : 'bg-blue-100 hover:bg-blue-200 text-blue-700 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 dark:text-blue-400'
+                  }`}
+                >
+                  {copied ? (
+                    <>
+                      <Check size={16} />
+                      <span>Đã copy</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={16} />
+                      <span>Copy Link</span>
+                    </>
+                  )}
+                </button>
               </div>
             </div>
             

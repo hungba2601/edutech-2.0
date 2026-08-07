@@ -1,4 +1,5 @@
-import React from 'react';
+﻿import React from 'react';
+import { MobileInstallInstructions } from './MobileInstallInstructions';
 import { X, Info, LogIn, PlayCircle, FileSpreadsheet, CheckCircle2, Sparkles } from 'lucide-react';
 
 interface SalaryCalculatorModalProps {
@@ -14,7 +15,7 @@ export const SalaryCalculatorModal: React.FC<SalaryCalculatorModalProps> = ({ is
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity">
       <div 
-        className="bg-white dark:bg-slate-900 w-full max-w-3xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300 max-h-[92vh] transition-colors duration-300 border border-green-500/20"
+        className="bg-white dark:bg-slate-900 w-full max-w-3xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300 max-h-[95vh] transition-colors duration-300 border border-green-500/20"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -95,7 +96,10 @@ export const SalaryCalculatorModal: React.FC<SalaryCalculatorModalProps> = ({ is
             </div>
           </div>
 
+          <MobileInstallInstructions url="https://tool-tinhluong.vercel.app/" />
+
         </div>
+
 
         {/* Footer Actions */}
         <div className="p-6 sm:p-8 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex flex-col sm:flex-row items-center justify-center gap-4 transition-colors">

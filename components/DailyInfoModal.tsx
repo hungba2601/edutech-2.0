@@ -1,4 +1,5 @@
 import React from 'react';
+import { MobileInstallInstructions } from './MobileInstallInstructions';
 import { X, Zap, Sparkles, TrendingUp, Newspaper, Clock, ArrowRight, Smartphone, Share2, MonitorPlay, ShoppingCart } from 'lucide-react';
 
 interface DailyInfoModalProps {
@@ -13,7 +14,7 @@ export const DailyInfoModal: React.FC<DailyInfoModalProps> = ({ isOpen, onClose,
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity">
       <div 
-        className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300"
+        className="bg-white dark:bg-slate-900 w-full max-w-4xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -92,55 +93,9 @@ export const DailyInfoModal: React.FC<DailyInfoModalProps> = ({ isOpen, onClose,
               </div>
             </div>
 
-            {/* PWA Instructions */}
-            <div className="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-800">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <h4 className="flex items-center space-x-2 text-sm font-black text-slate-900 dark:text-white uppercase tracking-tighter">
-                  <Smartphone className="w-5 h-5 text-blue-600" />
-                  <span>Hướng dẫn cài đặt thành App Mobile</span>
-                </h4>
-                <a 
-                  href="https://youtu.be/d_vjNZ0R3lw" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-all shadow-lg shadow-blue-500/25 active:scale-95 shrink-0"
-                >
-                  <MonitorPlay size={16} />
-                  <span>XEM VIDEO</span>
-                </a>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-3 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-7 h-7 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center text-green-600">
-                      <Smartphone size={16} />
-                    </div>
-                    <span className="text-sm font-bold text-slate-700 dark:text-slate-200">Trên Android (Chrome)</span>
-                  </div>
-                  <ol className="space-y-2 text-[11px] text-slate-500 dark:text-slate-400 list-decimal ml-4">
-                    <li>Truy cập trang web bằng Chrome.</li>
-                    <li>Nhấn vào dấu 3 chấm ở góc trên bên phải.</li>
-                    <li>Chọn <strong className="text-blue-500">Cài đặt ứng dụng</strong> hoặc <strong className="text-blue-600 font-bold">Thêm vào màn hình chính</strong>.</li>
-                  </ol>
-                </div>
-
-                <div className="space-y-3 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-7 h-7 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-blue-600">
-                      <Share2 size={16} />
-                    </div>
-                    <span className="text-sm font-bold text-slate-700 dark:text-slate-200">Trên iPhone (Safari)</span>
-                  </div>
-                  <ol className="space-y-2 text-[11px] text-slate-500 dark:text-slate-400 list-decimal ml-4">
-                    <li>Truy cập trang web bằng Safari.</li>
-                    <li>Nhấn vào nút <strong className="text-blue-500">Chia sẻ</strong>.</li>
-                    <li>Chọn <strong className="text-blue-600 font-bold">Thêm vào màn hình chính</strong>.</li>
-                  </ol>
-                </div>
-              </div>
-            </div>
+            
           </div>
+          <MobileInstallInstructions url="https://daily-infor.vercel.app/" videoUrl="https://youtu.be/d_vjNZ0R3lw" />
         </div>
 
         {/* Footer */}

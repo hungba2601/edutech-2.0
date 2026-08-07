@@ -1,5 +1,6 @@
-
+﻿
 import React from 'react';
+import { MobileInstallInstructions } from './MobileInstallInstructions';
 import { X, AlertCircle, PlayCircle } from 'lucide-react';
 
 interface TuViUpdateModalProps {
@@ -13,7 +14,7 @@ export const TuViUpdateModal: React.FC<TuViUpdateModalProps> = ({ isOpen, onClos
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity">
       <div 
-        className="bg-white dark:bg-slate-900 w-full max-w-lg rounded-[2rem] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300"
+        className="bg-white dark:bg-slate-900 w-full max-w-4xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[95vh] animate-in fade-in zoom-in duration-300 max-h-[95vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -33,7 +34,7 @@ export const TuViUpdateModal: React.FC<TuViUpdateModalProps> = ({ isOpen, onClos
         </div>
 
         {/* Content */}
-        <div className="p-8 space-y-6">
+        <div className="p-8 space-y-6 flex-1 overflow-y-auto">
           <div className="space-y-4">
             <p className="text-lg font-bold text-slate-900 dark:text-white flex items-center">
               <span className="mr-2">🕗</span> ĐÃ CÓ BẢN CẬP NHẬT TỬ VI & TƯỚNG SỐ AI
@@ -47,7 +48,9 @@ export const TuViUpdateModal: React.FC<TuViUpdateModalProps> = ({ isOpen, onClos
               </p>
             </div>
           </div>
+          <MobileInstallInstructions url="https://tuvi-tuongso-apk.vercel.app/" />
         </div>
+
 
         {/* Footer */}
         <div className="p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex flex-col sm:flex-row items-center justify-center gap-4">

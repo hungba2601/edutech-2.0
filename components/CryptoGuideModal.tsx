@@ -1,4 +1,5 @@
-import React from 'react';
+﻿import React from 'react';
+import { MobileInstallInstructions } from './MobileInstallInstructions';
 import { X, Info, AlertTriangle, ChevronRight } from 'lucide-react';
 
 interface CryptoGuideModalProps {
@@ -13,7 +14,7 @@ export const CryptoGuideModal: React.FC<CryptoGuideModalProps> = ({ isOpen, onCl
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity">
       <div 
-        className="bg-white dark:bg-slate-900 w-full max-w-xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300"
+        className="bg-white dark:bg-slate-900 w-full max-w-4xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300 max-h-[95vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -36,7 +37,7 @@ export const CryptoGuideModal: React.FC<CryptoGuideModalProps> = ({ isOpen, onCl
         </div>
 
         {/* Content */}
-        <div className="p-6 sm:p-8 space-y-6 overflow-y-auto max-h-[70vh]">
+        <div className="p-6 sm:p-8 space-y-6 overflow-y-auto  flex-1">
           {/* Section 1 */}
           <div className="space-y-3">
             <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-white flex items-center uppercase tracking-wide">
@@ -93,7 +94,9 @@ export const CryptoGuideModal: React.FC<CryptoGuideModalProps> = ({ isOpen, onCl
               Thị trường Crypto tiềm ẩn rủi ro rất cao. Mọi dự báo của AI chỉ mang tính chất tham khảo dựa trên mô hình quá khứ. Tuyệt đổi không sử dụng làm lời khuyên đầu tư tài chính duy nhất.
             </p>
           </div>
+          <MobileInstallInstructions url="https://dudoancrypto-apk.vercel.app/" />
         </div>
+
 
         {/* Footer */}
         <div className="p-6 sm:p-8 bg-slate-50/50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800">

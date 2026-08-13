@@ -51,6 +51,7 @@ import { GDriveDownloaderModal } from './components/GDriveDownloaderModal';
 import { CreateContentVideoShortModal } from './components/CreateContentVideoShortModal';
 import { ThongKeTS10Modal } from './components/ThongKeTS10Modal';
 import { PensionCalculator154Modal } from './components/PensionCalculator154Modal';
+import { PensionCalculatorBHXHModal } from './components/PensionCalculatorBHXHModal';
 
 import { NotificationModal } from './components/NotificationModal';
 import { LayoutGrid, CreditCard, Youtube, Key, Sigma, Phone, FileCode, ClipboardList, Download, Sun, Moon, Table, FileSpreadsheet, PlayCircle, Code, FileText, ArrowRight, Video, Image, GraduationCap, Users, BookOpen, Target, Eye, Lock, EyeOff, Bell } from 'lucide-react';
@@ -191,6 +192,7 @@ const App: React.FC = () => {
   const [isCreateContentVideoShortModalOpen, setIsCreateContentVideoShortModalOpen] = useState(false);
   const [isThongKeTS10ModalOpen, setIsThongKeTS10ModalOpen] = useState(false);
   const [isPensionCalculator154ModalOpen, setIsPensionCalculator154ModalOpen] = useState(false);
+  const [isPensionCalculatorBHXHModalOpen, setIsPensionCalculatorBHXHModalOpen] = useState(false);
 
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const [notificationText, setNotificationText] = useState("");
@@ -286,6 +288,7 @@ const App: React.FC = () => {
     setIsCreateContentVideoShortModalOpen(false);
     setIsThongKeTS10ModalOpen(false);
     setIsPensionCalculator154ModalOpen(false);
+    setIsPensionCalculatorBHXHModalOpen(false);
 
     setIsNotificationModalOpen(false);
   };
@@ -396,6 +399,8 @@ const App: React.FC = () => {
       setIsThongKeTS10ModalOpen(true);
     } else if (id === 'pension-calculator-154') {
       setIsPensionCalculator154ModalOpen(true);
+    } else if (id === 'pension-calculator-bhxh') {
+      setIsPensionCalculatorBHXHModalOpen(true);
     }
   };
 
@@ -448,7 +453,8 @@ const App: React.FC = () => {
       'gdrive-unblock-downloader': 'https://drive.google.com/drive/folders/1E4Z7ViVzc9GnrUzDHfXyehggiShotCmI?usp=sharing',
       'create-content-video-short': 'https://drive.google.com/drive/folders/1CGCMZZp8ff9J7FR6nh6V3s009RKfqPjI?usp=sharing',
       'thongke-ts10': 'https://tool-thongke-ts10.vercel.app/',
-      'pension-calculator-154': 'https://tinh-luong-huu.vercel.app/'
+      'pension-calculator-154': 'https://tinh-luong-huu.vercel.app/',
+      'pension-calculator-bhxh': 'https://tinh-che-do-huu-bhxh.vercel.app/'
     };
 
     if (links[id]) {
@@ -1299,6 +1305,11 @@ const App: React.FC = () => {
         onClose={() => setIsPensionCalculator154ModalOpen(false)}
         onLogin={() => handleLoginAction('pension-calculator-154')}
         videoUrl="https://youtu.be/JFNpd4lKs_A"
+      />
+      <PensionCalculatorBHXHModal
+        isOpen={isPensionCalculatorBHXHModalOpen}
+        onClose={() => setIsPensionCalculatorBHXHModalOpen(false)}
+        onLogin={() => handleLoginAction('pension-calculator-bhxh')}
       />
 
       <NotificationModal

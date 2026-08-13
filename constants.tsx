@@ -571,6 +571,17 @@ export const APP_CATEGORIES: Category[] = [
         isFree: true,
         buttonLabel: 'Đăng nhập',
         secondaryLabel: 'Hướng dẫn'
+      },
+      {
+        id: 'pension-calculator-bhxh',
+        title: 'CÔNG CỤ TÍNH CHẾ ĐỘ LƯƠNG THEO LUẬT BHXH',
+        icon: <FileSpreadsheet className="w-8 h-8" />,
+        color: 'bg-emerald-600',
+        description: 'CÔNG CỤ GIÚP TÍNH CHẾ ĐỘ LƯƠNG HƯU THEO LUẬT BHXH.',
+        isNew: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn'
       }
     ]
   }

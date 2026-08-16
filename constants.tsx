@@ -456,6 +456,17 @@ export const APP_CATEGORIES: Category[] = [
         isFree: true,
         buttonLabel: 'Đăng nhập',
         secondaryLabel: 'Hướng dẫn'
+      },
+      {
+        id: 'excel-merger',
+        title: 'CÔNG CỤ GHÉP FILE EXCEL',
+        icon: <FileSpreadsheet className="w-8 h-8" />,
+        color: 'bg-green-600',
+        description: 'Công cụ ghép file excel , nhiều file thành 1 file excel 1 sheet, nhiều sheet, file excel nhiều sheet thành 1 sheet',
+        isNew: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn'
       }
     ]
   },

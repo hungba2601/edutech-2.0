@@ -38,7 +38,7 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose, onL
                 className="hidden sm:flex items-center space-x-1.5 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-full text-white shadow-lg transition-all text-sm font-bold border border-white/10"
               >
                 <PlayCircle size={16} />
-                <span>Xem Video HD</span>
+                <span>VIDEO HƯỚNG DẪN</span>
               </a>
             )}
             <button 
@@ -130,7 +130,7 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose, onL
               className="flex items-center justify-center space-x-2 w-full py-3 bg-red-500 text-white rounded-xl font-bold shadow-md"
             >
               <PlayCircle size={18} />
-              <span>Xem Video HD</span>
+              <span>VIDEO HƯỚNG DẪN</span>
             </a>
           </div>
         )}

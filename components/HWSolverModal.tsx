@@ -42,7 +42,18 @@ export const HWSolverModal: React.FC<HWSolverModalProps> = ({ isOpen, onClose, o
           <div className="space-y-4">
             <div className="flex items-start space-x-3 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
               <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold">1</div>
-              <p className="text-slate-700 dark:text-slate-300 font-medium">Tải tiện ích về máy</p>
+              <div className="flex-1 w-full">
+                <p className="text-slate-700 dark:text-slate-300 font-medium mb-3">Hướng dẫn cài tiện ích:</p>
+                <div className="bg-amber-50 dark:bg-amber-900/10 p-4 rounded-xl border border-amber-100 dark:border-amber-900/30">
+                  <ol className="list-decimal list-inside space-y-2 text-sm text-slate-700 dark:text-slate-300 font-medium">
+                    <li>Nhấn nút <strong>Tải tiện ích</strong> bên dưới để lấy file cài đặt.</li>
+                    <li>Giải nén file vừa tải về máy tính của bạn.</li>
+                    <li>Mở trình duyệt Chrome, vào phần <strong>Quản lý tiện ích</strong> (Extensions).</li>
+                    <li>Bật chế độ <strong>Dành cho nhà phát triển</strong> (Developer mode).</li>
+                    <li>Chọn <strong>Tải tiện ích đã giải nén</strong> (Load unpacked) và chọn thư mục vừa giải nén.</li>
+                  </ol>
+                </div>
+              </div>
             </div>
 
             <div className="flex items-start space-x-3 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">

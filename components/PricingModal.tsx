@@ -35,13 +35,14 @@ export const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose }) =
         <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-4 scrollbar-hide bg-white dark:bg-slate-900 transition-colors duration-300">
           <div className="space-y-3">
             {[
-              { id: 1, text: "APP TẠO CÁC LOẠI KH CÓ TÍCH HỢP NLS", price: "199K" },
-              { id: 2, text: "APP TẠO KHBD 5512 + POWERPOINT + SĐTD", price: "299K" },
+              { id: 1, text: "APP TẠO CÁC LOẠI KH CÓ TÍCH HỢP NLS + AI", price: "199K" },
+              { id: 2, text: "APP TẠO KHBD CÓ NLS-AI 5512 + POWERPOINT + SĐTD", price: "299K" },
               { id: 3, text: "APP TẠO MA TRẬN + CÂU HỎI ÔN TẬP + ĐỀ THI THEO CV 7991", price: "299K" },
-              { id: 4, text: "APP VIẾT SÁNG KIẾN KINH NGHIỆM (SKKN)", price: "99K" },
+              { id: 4, text: "APP VIẾT SÁNG KIẾN KINH NGHIỆM (SKKN)", price: "ĐƯỢC TẶNG KHI MUA \" TOOL VIẾT BIỆN PHÁP + SKKN...\"" },
               { id: 5, text: "TOOL VIẾT BIỆN PHÁP + SKKN + THẨM ĐỊNH / HOÀN CHỈNH", price: "199K" },
-              { id: 6, text: "APP THẨM ĐỊNH + TỰ ĐỘNG CHỈNH SỬA SKKN", price: "99K" },
-              { id: 7, text: "TIỆN ÍCH TỰ ĐỘNG GIẢI TN+TL TRÊN CÁC TRANG WEB", price: "99K" }
+              { id: 6, text: "APP THẨM ĐỊNH + TỰ ĐỘNG CHỈNH SỬA SKKN", price: "ĐƯỢC TẶNG KHI MUA \" TOOL VIẾT BIỆN PHÁP + SKKN...\"" },
+              { id: 7, text: "TIỆN ÍCH TỰ ĐỘNG GIẢI TN+TL TRÊN CÁC TRANG WEB", price: "99K" },
+              { id: 8, text: "TIỆN ÍCH AUTO NHẬN XÉT CÁC MÔN HỌC", price: "99K" }
             ].map((item) => (
               <div key={item.id} className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 group hover:border-green-200 dark:hover:border-green-800 hover:bg-green-50/30 dark:hover:bg-green-900/20 transition-all">
                 <div className="flex items-start space-x-3 flex-1">
@@ -49,7 +50,7 @@ export const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose }) =
                   <span className="text-[12px] sm:text-sm font-bold text-slate-700 dark:text-slate-300 leading-snug">{item.text}</span>
                 </div>
                 <div className="ml-3 sm:ml-4 text-right">
-                  <span className="text-base sm:text-lg font-black text-red-600 dark:text-red-400 font-outfit">{item.price}</span>
+                  <span className={`${item.price.includes('ĐƯỢC TẶNG') ? 'text-[10px] sm:text-[11px] leading-tight' : 'text-base sm:text-lg'} font-black text-red-600 dark:text-red-400 font-outfit block max-w-[120px] sm:max-w-[150px]`}>{item.price}</span>
                 </div>
               </div>
             ))}

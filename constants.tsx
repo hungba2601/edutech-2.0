@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   Zap, 
@@ -27,7 +26,11 @@ import {
   Table,
   Smartphone,
   Trophy,
-  Sigma
+  Sigma,
+  Shuffle,
+  Printer,
+  Image,
+  Video
 } from 'lucide-react';
 import { Category } from './types';
 
@@ -54,7 +57,7 @@ export const APP_CATEGORIES: Category[] = [
         icon: <Zap className="w-8 h-8" />,
         color: 'bg-blue-500',
         description: 'Số hóa kế hoạch giảng dạy theo chuẩn năng lực 4.0',
-        videoUrl: 'https://youtu.be/2Yxbk43834g'
+        videoUrl: 'https://youtu.be/GiU2a0rQ8mk'
       },
       {
         id: 'khbd-5512',
@@ -62,7 +65,7 @@ export const APP_CATEGORIES: Category[] = [
         icon: <Presentation className="w-8 h-8" />,
         color: 'bg-indigo-500',
         description: 'Trọn bộ giáo án, bài giảng và sơ đồ tư duy chỉ trong vài phút',
-        videoUrl: 'https://youtu.be/kVjrOP2TCyI'
+        videoUrl: 'https://youtu.be/j_tlirpoFrY'
       },
       {
         id: 'matrix-exam',
@@ -73,12 +76,30 @@ export const APP_CATEGORIES: Category[] = [
         videoUrl: 'https://www.youtube.com/watch?v=wWkUbTdy6wc'
       },
       {
+        id: 'gvg-assistant',
+        title: 'TOOL VIẾT BIỆN PHÁP GVG/GVCNG + SKKN + THẨM ĐỊNH VÀ HOÀN CHỈNH',
+        icon: <FileText className="w-8 h-8" />,
+        color: 'bg-orange-500',
+        description: 'Công cụ giúp viết biện pháp khi thi GVG hoặc GVCN Giỏi từ A-Z. từ khâu chọn đề tài đến hết. Có thể mô tả ý để Ai viết theo',
+        isNew: true,
+        isHot: true
+      },
+      {
         id: 'skkn-ai',
         title: 'APP VIẾT SÁNG KIẾN KINH NGHIỆM (SKKN)',
         icon: <ClipboardList className="w-8 h-8" />,
         color: 'bg-rose-500',
         description: 'Tự động hóa viết báo cáo thành tích và sáng kiến kinh nghiệm chuẩn quy định',
-        isNew: true
+        isGifted: true
+      },
+      {
+        id: 'skkn-review',
+        title: 'APP THẨM ĐỊNH VÀ TỰ ĐỘNG CHỈNH SỬA HOÀN CHỈNH SKKN',
+        icon: <ShieldCheck className="w-8 h-8" />,
+        color: 'bg-indigo-600',
+        description: 'Tự động hóa thẩm định, đánh giá và hoàn thiện bài viết sáng kiến kinh nghiệm chuyên sâu.',
+        isGifted: true,
+        videoUrl: 'https://youtu.be/PVAT21m5drA'
       },
       {
         id: 'biology-sim',
@@ -107,13 +128,26 @@ export const APP_CATEGORIES: Category[] = [
         isNew: true
       },
       {
-        id: 'gvg-assistant',
-        title: 'TOOL VIẾT BIỆN PHÁP GVG/GVCNG + SKKN + THẨM ĐỊNH VÀ HOÀN CHỈNH',
-        icon: <FileText className="w-8 h-8" />,
-        color: 'bg-orange-500',
-        description: 'Công cụ giúp viết biện pháp khi thi GVG hoặc GVCN Giỏi từ A-Z. từ khâu chọn đề tài đến hết. Có thể mô tả ý để Ai viết theo',
+        id: 'exam-shuffler-ai',
+        title: 'APP TRỘN ĐỀ KIỂM TRA (AI)',
+        icon: <Shuffle className="w-8 h-8" />,
+        color: 'bg-emerald-600',
+        description: 'Công cụ AI giúp đảo câu hỏi và đáp án tự động, giữ nguyên định dạng file gốc, tích hợp mã QR đáp án.',
         isNew: true,
-        isHot: true
+        isHot: true,
+        isFree: true
+      },
+      {
+        id: 'tool-tao-khgd',
+        title: 'CÔNG CỤ TẠO CÁC LOẠI KHGD, PHỤ LỤC 1,2,3',
+        icon: <FileSpreadsheet className="w-8 h-8" />,
+        color: 'bg-emerald-600',
+        description: 'CÔNG CỤ HỖ TRỢ TCCM, GV TẠO CÁC LOẠI KHGD , PL1,2,.3....',
+        isNew: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn',
+        videoUrl: 'https://youtu.be/ocs87GCFza0'
       }
     ]
   },
@@ -125,7 +159,7 @@ export const APP_CATEGORIES: Category[] = [
     apps: [
       {
         id: 'learning-assistant',
-        title: 'TRỢ LÝ HỌC TẬP - ÔN LUYỆN KIẾN THỨC',
+        title: 'ÔN LUYỆN KIẾN THỨC (AI)',
         icon: <Sparkles className="w-8 h-8" />,
         color: 'bg-amber-500',
         description: 'Giải đáp thắc mắc, tóm tắt bài học và tạo đề ôn luyện cá nhân hóa theo trình độ.',
@@ -147,6 +181,18 @@ export const APP_CATEGORIES: Category[] = [
         isNew: true,
         isFree: true,
         buttonLabel: 'Tải App'
+      },
+      {
+        id: 'guess-proverb-game',
+        title: 'NHÌN HÌNH ĐOÁN CA DAO TỤC NGỮ',
+        icon: <Image className="w-8 h-8" />,
+        color: 'bg-green-600',
+        description: 'Trò chơi tương tác giúp học sinh tìm hiểu và ghi nhớ các câu ca dao, tục ngữ Việt Nam.',
+        isNew: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn',
+        videoUrl: 'https://youtube.com'
       }
     ]
   },
@@ -202,6 +248,28 @@ export const APP_CATEGORIES: Category[] = [
         isNew: true,
         isHot: true,
         isFree: true
+      },
+      {
+        id: 'ai-photo-editor',
+        title: 'CHỈNH SỬA ẢNH AI',
+        icon: <Image className="w-8 h-8" />,
+        color: 'bg-orange-500',
+        description: 'Công cụ chỉnh sửa và thiết kế hình ảnh thông minh tích hợp trí tuệ nhân tạo (AI) giúp tối ưu hóa hình ảnh nhanh chóng.',
+        isHot: true,
+        isFree: true
+      },
+      {
+        id: 'create-image-video-app',
+        title: 'CÔNG CỤ TẠO ẢNH - INFORGRAPHIC - VIDEO CHO BÀI HỌC',
+        icon: <Video className="w-8 h-8" />,
+        color: 'bg-rose-500',
+        description: 'TẠO ẢNH INFORGRAPHIC TÓM TẮT BÀI HỌC VÀ VIDEO MỞ ĐẦU BÀI HỌC, MC......',
+        isNew: true,
+        isHot: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn',
+        videoUrl: 'https://youtu.be/aV97Dy55Bsk'
       }
     ]
   },
@@ -211,6 +279,41 @@ export const APP_CATEGORIES: Category[] = [
     icon: <Cpu className="w-8 h-8" />,
     description: 'Các công cụ hữu ích giúp đơn giản hóa công việc văn phòng và xử lý dữ liệu.',
     apps: [
+      {
+        id: 'hw-solver',
+        title: 'TIỆN ÍCH TỰ ĐỘNG GIẢI TN+TL TRÊN CÁC TRANG WEB',
+        icon: <Sparkles className="w-8 h-8" />,
+        color: 'bg-indigo-500',
+        description: 'TIỆN ÍCH GIẢI BÀI TẬP TN+TL TẤT CẢ CÁC TRANG WEB . ĐẶC BIỆT LÀ TRANG BDTX.',
+        isNew: true,
+        isHot: true,
+        buttonLabel: 'Tải tiện ích',
+        videoUrl: 'https://youtu.be/8_QOQBYmnKg'
+      },
+      {
+        id: 'auto-comment-utility',
+        title: 'TIỆN ÍCH TỰ ĐỘNG NHẬN XÉT HK & HỌC BẠ CÁC MÔN HỌC',
+        icon: <ClipboardList className="w-8 h-8" />,
+        color: 'bg-indigo-500',
+        description: 'Tiện ích hỗ trợ giáo viên tự động nhận xét học kỳ và học bạ cho các môn học nhanh chóng và chính xác.',
+        isNew: true,
+        isHot: true,
+        buttonLabel: 'Tải tiện ích',
+        secondaryLabel: 'Xem hướng dẫn',
+        videoUrl: 'https://youtu.be/nYbso-lv6Nk'
+      },
+      {
+        id: 'print-pro',
+        title: 'CÔNG CỤ HỖ TRỢ IN ẤN PRO',
+        icon: <Printer className="w-8 h-8" />,
+        color: 'bg-emerald-600',
+        description: 'CÔNG CỤ GIÚP ADMIN DỄ DÀNG IN HÀNG LOẠT SỔ ĐIỂM , BẢNG ĐIỂM TỔNG HỢP TỪ FILE EXCEL XUẤT RA TỪ HỆ THỐNG Qi 1 CÁCH NHANH CHÓNG , TIỆN LỢI',
+        isNew: true,
+        isHot: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        videoUrl: 'https://www.youtube.com/watch?v=CyNva1rSBGg&feature=youtu.be'
+      },
       {
         id: 'word-to-katex',
         title: 'CHUYỂN ĐỔI MÃ LATEX TRÊN WORD SANG CÔNG THỨC TOÁN HỌC ( KATEX )',
@@ -231,16 +334,6 @@ export const APP_CATEGORIES: Category[] = [
         isFree: true
       },
       {
-        id: 'skkn-review',
-        title: 'APP THẨM ĐỊNH VÀ TỰ ĐỘNG CHỈNH SỬA HOÀN CHỈNH SKKN',
-        icon: <ShieldCheck className="w-8 h-8" />,
-        color: 'bg-indigo-600',
-        description: 'Tự động thẩm định, đánh giá và hoàn thiện bài viết sáng kiến kinh nghiệm chuyên sâu.',
-        isNew: true,
-        isHot: true,
-        videoUrl: 'https://youtu.be/PVAT21m5drA'
-      },
-      {
         id: 'image-to-excel',
         title: 'BIẾN HÌNH ẢNH THÀNH EXCEL',
         icon: <FileSpreadsheet className="w-8 h-8" />,
@@ -248,26 +341,7 @@ export const APP_CATEGORIES: Category[] = [
         description: 'Trích xuất dữ liệu từ hình ảnh bảng biểu sang định dạng Excel chính xác cao.',
         isFree: true
       },
-      {
-        id: 'crypto-prediction',
-        title: 'APP DỰ ĐOÁN CRYPTO',
-        icon: <TrendingUp className="w-8 h-8" />,
-        color: 'bg-orange-500',
-        description: 'Phân tích xu hướng và dự đoán biến động thị trường tiền điện tử bằng AI.',
-        isFree: true,
-        isHot: true
-      },
-      {
-        id: 'hw-solver',
-        title: 'TIỆN ÍCH TỰ ĐỘNG GIẢI TN+TL TRÊN CÁC TRANG WEB',
-        icon: <Sparkles className="w-8 h-8" />,
-        color: 'bg-indigo-500',
-        description: 'TIỆN ÍCH GIẢI BÀI TẬP TN+TL TẤT CẢ CÁC TRANG WEB . ĐẶC BIỆT LÀ TRANG BDTX.',
-        isNew: true,
-        isHot: true,
-        buttonLabel: 'Tải tiện ích',
-        videoUrl: 'https://www.youtube.com/watch?v=d7wrjsAMtMo'
-      },
+
       {
         id: 'extension-youtube',
         title: 'EXTENSION DOWLOAD VIDEO YOUTUBE',
@@ -321,6 +395,90 @@ export const APP_CATEGORIES: Category[] = [
         description: 'Giúp đồng bộ điểm theo danh sách từ file danh sách có điểm sang file danh sách có nhiều sheet lớp.',
         isNew: true,
         isFree: true
+      },
+      {
+        id: 'sgk-summary',
+        title: 'CÔNG CỤ TÓM TẮT NỘI DUNG BÀI HỌC SGK KNTT',
+        icon: <BookOpen className="w-8 h-8" />,
+        color: 'bg-indigo-600',
+        description: 'Công cụ giúp tóm tắt nội dung sách giáo khoa Kết nối tri thức một cách nhanh chóng và hiệu quả.',
+        isNew: true,
+        isHot: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn',
+        videoUrl: 'https://youtu.be/jYJviVR3PdI'
+      },
+      {
+        id: 'pdf-editor-nph',
+        title: 'Tool edit file Pdf',
+        icon: <FileText className="w-8 h-8" />,
+        color: 'bg-red-500',
+        description: 'Công cụ chỉnh sửa file Pdf trực tiếp giống như chỉnh sửa word , giữ nguyên font chữ , định dạng...',
+        isNew: true,
+        isHot: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn',
+        videoUrl: 'https://youtu.be/K507LjkDzDc'
+      },
+      {
+        id: 'soan-cong-van-ke-hoach',
+        title: 'CÔNG CỤ SOẠN THẢO CÔNG VĂN - KẾ HOẠCH',
+        icon: <FileText className="w-8 h-8" />,
+        color: 'bg-emerald-600',
+        description: 'Công cụ soạn công văn kế hoạch theo đúng chuẩn NĐ 30/2020/NĐ-CP',
+        isNew: true,
+        isHot: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn'
+      },
+      {
+        id: 'simulation-tool',
+        title: 'TOOL TẠO MÔ PHỎNG BÀI HỌC',
+        icon: <Microscope className="w-8 h-8" />,
+        color: 'bg-indigo-600',
+        description: 'TẠO CÁC MÔ PHỎNG THÍ NGHIỆP , MÔ PHỔNG BÀI TẬP KHTN, TOÁN ....',
+        isNew: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn',
+        videoUrl: 'https://youtu.be/eOQE4ccX8dA'
+      },
+      {
+        id: 'gdrive-unblock-downloader',
+        title: 'TIỆN ÍCH TẢI TÀI LIỆU BỊ GOOGLE DRIVE CHẶN',
+        icon: <Download className="w-8 h-8" />,
+        color: 'bg-blue-600',
+        description: 'Tải tài liệu trên google drive bị chặn tải về',
+        isNew: true,
+        isFree: true,
+        buttonLabel: 'Tải tiện ích',
+        secondaryLabel: 'Hướng dẫn',
+        videoUrl: 'https://youtu.be/k6Z3e_U_VV8'
+      },
+      {
+        id: 'thongke-ts10',
+        title: 'CÔNG CỤ THỐNG KÊ TUYỂN SINH 10 CHI TIẾT',
+        icon: <Table className="w-8 h-8" />,
+        color: 'bg-emerald-600',
+        description: 'Công cụ thống kê kết quả thi tuyển sinh lớp 10 chi tiết.',
+        isNew: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn'
+      },
+      {
+        id: 'excel-merger',
+        title: 'CÔNG CỤ GHÉP FILE EXCEL',
+        icon: <FileSpreadsheet className="w-8 h-8" />,
+        color: 'bg-green-600',
+        description: 'Công cụ ghép file excel , nhiều file thành 1 file excel 1 sheet, nhiều sheet, file excel nhiều sheet thành 1 sheet',
+        isNew: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn'
       }
     ]
   },
@@ -329,7 +487,18 @@ export const APP_CATEGORIES: Category[] = [
     name: 'APP DESKTOP',
     icon: <MonitorPlay className="w-8 h-8" />,
     description: 'Các ứng dụng dành cho máy tính giúp nâng cao hiệu suất làm việc.',
-    apps: []
+    apps: [
+      {
+        id: 'create-content-video-short',
+        title: 'APP TẠO CONTENT VIDEO SHORT',
+        icon: <Video className="w-8 h-8" />,
+        color: 'bg-indigo-600',
+        description: 'APP TẠO CONTENT , VIDEO SHORT TỪ LINK CÁC TRANG WEB BÁO CHÍ',
+        isNew: true,
+        isFree: true,
+        buttonLabel: 'Tải App'
+      }
+    ]
   },
   {
     id: 'mobile-apps',
@@ -345,7 +514,7 @@ export const APP_CATEGORIES: Category[] = [
         description: 'Ứng dụng này giúp Học sinh và nhà trường có kết nối with nhau để hạn chế các vụ bạo lực học đường',
         isNew: true,
         isHot: true,
-        buttonLabel: 'Xem Video'
+        buttonLabel: 'Đăng nhập'
       },
       {
         id: 'crypto-prediction-mobile',
@@ -355,7 +524,7 @@ export const APP_CATEGORIES: Category[] = [
         description: 'Phân tích xu hướng và dự đoán biến động thị trường tiền điện tử bằng AI.',
         isNew: true,
         isFree: true,
-        buttonLabel: 'Tải App',
+        buttonLabel: 'Đăng nhập',
         secondaryLabel: 'Xem'
       },
       {
@@ -367,7 +536,7 @@ export const APP_CATEGORIES: Category[] = [
         isNew: true,
         isFree: true,
         isHot: true,
-        buttonLabel: 'TẢI APP',
+        buttonLabel: 'Đăng nhập',
         secondaryLabel: 'Xem'
       },
       {
@@ -402,6 +571,40 @@ export const APP_CATEGORIES: Category[] = [
         isFree: true,
         buttonLabel: 'Đăng nhập',
         secondaryLabel: 'Xem'
+      },
+      {
+        id: 'salary-calculator',
+        title: 'TOOL TÍNH TIỀN LƯƠNG',
+        icon: <FileSpreadsheet className="w-8 h-8" />,
+        color: 'bg-green-600',
+        description: 'TÍNH TIỀN LƯƠNG CHO NGƯỜI LAO ĐỘNG',
+        isNew: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn'
+      },
+      {
+        id: 'pension-calculator-154',
+        title: 'CÔNG CỤ TÍNH LƯƠNG HƯU THEO NGHỊ ĐỊNH 154',
+        icon: <FileSpreadsheet className="w-8 h-8" />,
+        color: 'bg-blue-600',
+        description: 'CÔNG CỤ GIÚP TÍNH LƯƠNG HƯU NGHỈ TRƯỚC TUỔI , NGHỈ NGAY THEO NĐ 154.',
+        isNew: true,
+        isHot: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn'
+      },
+      {
+        id: 'pension-calculator-bhxh',
+        title: 'CÔNG CỤ TÍNH CHẾ ĐỘ LƯƠNG THEO LUẬT BHXH',
+        icon: <FileSpreadsheet className="w-8 h-8" />,
+        color: 'bg-emerald-600',
+        description: 'CÔNG CỤ GIÚP TÍNH CHẾ ĐỘ LƯƠNG HƯU THEO LUẬT BHXH.',
+        isNew: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn'
       }
     ]
   }

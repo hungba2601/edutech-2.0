@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Công cụ hỗ trợ giảng dạy</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    <link rel="apple-touch-icon" href="/icon.svg">
+    <meta name="theme-color" content="#0ea5e9">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -94,6 +98,36 @@
             }
         }
 
+        /* Hiệu ứng chuông rung lắc khi có thông báo mới */
+        @keyframes bell-ring {
+            0%, 100% { transform: rotate(0deg); }
+            10% { transform: rotate(14deg); }
+            20% { transform: rotate(-14deg); }
+            30% { transform: rotate(10deg); }
+            40% { transform: rotate(-10deg); }
+            50% { transform: rotate(6deg); }
+            60% { transform: rotate(-4deg); }
+            70% { transform: rotate(2deg); }
+            80% { transform: rotate(-1deg); }
+            90% { transform: rotate(0deg); }
+        }
+        @keyframes notification-glow {
+            0%, 100% { 
+                box-shadow: 0 0 4px rgba(239, 68, 68, 0.4), 0 0 8px rgba(239, 68, 68, 0.2);
+                background-color: rgba(239, 68, 68, 0.1);
+            }
+            50% { 
+                box-shadow: 0 0 12px rgba(239, 68, 68, 0.8), 0 0 24px rgba(239, 68, 68, 0.4);
+                background-color: rgba(239, 68, 68, 0.25);
+            }
+        }
+        .bell-notify {
+            animation: bell-ring 1.2s ease-in-out infinite, notification-glow 1.5s ease-in-out infinite;
+        }
+        .bell-notify .bell-icon {
+            color: #ef4444 !important;
+        }
+
         /* Hiệu ứng nền cao cấp */
         .wave-container {
             position: fixed;
@@ -179,5 +213,18 @@
   <body class="bg-gray-100 dark:bg-gray-900">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('ServiceWorker registration successful');
+            })
+            .catch(err => {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

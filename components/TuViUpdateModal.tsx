@@ -1,20 +1,20 @@
-
+﻿
 import React from 'react';
+import { MobileInstallInstructions } from './MobileInstallInstructions';
 import { X, AlertCircle, PlayCircle } from 'lucide-react';
 
 interface TuViUpdateModalProps {
   isOpen: boolean;
   onClose: () => void;
-  videoUrl: string;
 }
 
-export const TuViUpdateModal: React.FC<TuViUpdateModalProps> = ({ isOpen, onClose, videoUrl }) => {
+export const TuViUpdateModal: React.FC<TuViUpdateModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity">
       <div 
-        className="bg-white dark:bg-slate-900 w-full max-w-lg rounded-[2rem] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300"
+        className="bg-white dark:bg-slate-900 w-full max-w-4xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[95vh] animate-in fade-in zoom-in duration-300 max-h-[95vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -34,7 +34,7 @@ export const TuViUpdateModal: React.FC<TuViUpdateModalProps> = ({ isOpen, onClos
         </div>
 
         {/* Content */}
-        <div className="p-8 space-y-6">
+        <div className="p-8 space-y-6 flex-1 overflow-y-auto">
           <div className="space-y-4">
             <p className="text-lg font-bold text-slate-900 dark:text-white flex items-center">
               <span className="mr-2">🕗</span> ĐÃ CÓ BẢN CẬP NHẬT TỬ VI & TƯỚNG SỐ AI
@@ -48,19 +48,13 @@ export const TuViUpdateModal: React.FC<TuViUpdateModalProps> = ({ isOpen, onClos
               </p>
             </div>
           </div>
+          <MobileInstallInstructions url="https://tuvi-tuongso-apk.vercel.app/" />
         </div>
+
 
         {/* Footer */}
         <div className="p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a 
-            href={videoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg transition-all active:scale-95 flex items-center justify-center space-x-2 uppercase tracking-wider"
-          >
-            <PlayCircle size={18} />
-            <span>XEM VIDEO HD</span>
-          </a>
+
           <button 
             onClick={onClose}
             className="w-full sm:w-auto px-8 py-3 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-white font-bold rounded-xl shadow-md transition-all active:scale-95 uppercase tracking-wider"

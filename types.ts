@@ -10,6 +10,7 @@ export interface AppItem {
   isFree?: boolean;
   isHot?: boolean;
   isNew?: boolean;
+  isGifted?: boolean;
   videoUrl?: string;
   buttonLabel?: string;
   secondaryLabel?: string;

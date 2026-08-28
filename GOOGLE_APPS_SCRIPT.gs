@@ -1,4 +1,4 @@
-﻿function doGet(e) {
+function doGet(e) {
   var action = e.parameter.action;
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName("Sheet1") || ss.getSheets()[0];
@@ -17,6 +17,13 @@
     }
     return ContentService
       .createTextOutput(JSON.stringify(counts))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  if (action === 'getNotification') {
+    var notification = sheet.getRange("E1").getValue();
+    return ContentService
+      .createTextOutput(JSON.stringify({ text: notification }))
       .setMimeType(ContentService.MimeType.JSON);
   }
 

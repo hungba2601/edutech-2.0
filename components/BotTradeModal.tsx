@@ -1,5 +1,6 @@
-import React from 'react';
-import { X, BookOpen, Settings, Target, PlayCircle, Download } from 'lucide-react';
+﻿import React from 'react';
+import { MobileInstallInstructions } from './MobileInstallInstructions';
+import { X, BookOpen, Settings, Target, PlayCircle, Download, Copy } from 'lucide-react';
 
 interface BotTradeModalProps {
   isOpen: boolean;
@@ -13,7 +14,7 @@ export const BotTradeModal: React.FC<BotTradeModalProps> = ({ isOpen, onClose, o
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity">
       <div 
-        className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300 max-h-[90vh]"
+        className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[95vh] animate-in fade-in zoom-in duration-300 max-h-[95vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -86,7 +87,10 @@ export const BotTradeModal: React.FC<BotTradeModalProps> = ({ isOpen, onClose, o
             </ul>
           </div>
 
+          
+          <MobileInstallInstructions url="https://drive.google.com/drive/folders/1NFNTi1qtujlVro4QEmbUlEOqDottU8ad?usp=sharing" />
         </div>
+
 
         {/* Footer */}
         <div className="p-6 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-800 flex flex-col sm:flex-row items-center justify-center gap-4">

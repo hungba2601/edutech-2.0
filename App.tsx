@@ -1115,24 +1115,24 @@ const App: React.FC = () => {
 
             <button 
               onClick={() => {
-                handleResourceClick('ĐĂNG KÝ THÁNG HỌC TIẾNG ANH MIỄN PHÍ CHO GIÁO VIÊN 2026', 'https://youtu.be/dNmg4VCKiKc');
+                handleResourceClick('HƯỚNG DẪN GVCN CẬP NHẬT THÔNG TIN HỌC SINH LÊN CSDL', 'https://youtu.be/AexaR5R-gs0');
               }}
-              className={`group flex items-center p-4 sm:p-6 border rounded-[1.5rem] sm:rounded-[2rem] transition-all hover:-translate-y-1 relative text-left w-full shadow-lg ${isDarkMode ? 'bg-gradient-to-br from-violet-900 to-fuchsia-950 border-white/10 shadow-violet-900/20' : 'bg-gradient-to-br from-violet-500 to-fuchsia-600 border-white/20 shadow-violet-200'}`}
+              className={`group flex items-center p-4 sm:p-6 border rounded-[1.5rem] sm:rounded-[2rem] transition-all hover:-translate-y-1 relative text-left w-full shadow-lg ${isDarkMode ? 'bg-gradient-to-br from-blue-900 to-indigo-950 border-white/10 shadow-blue-900/20' : 'bg-gradient-to-br from-blue-600 to-indigo-600 border-white/20 shadow-blue-200'}`}
             >
               <div className="absolute top-3 right-3 z-10 text-right space-y-1">
                 <div className="bg-yellow-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded-full shadow-lg animate-bounce inline-block">NEW</div>
                 <div className="block">
                   <span className="bg-sky-400/80 backdrop-blur-md text-white text-[8px] sm:text-[9px] font-black px-1.5 py-0.5 rounded-lg shadow-lg border border-white/20 uppercase tracking-tighter">
-                    Lượt: {(appCounts['ĐĂNG KÝ THÁNG HỌC TIẾNG ANH MIỄN PHÍ CHO GIÁO VIÊN 2026'] || 0).toLocaleString()}
+                    Lượt: {(appCounts['HƯỚNG DẪN GVCN CẬP NHẬT THÔNG TIN HỌC SINH LÊN CSDL'] || 0).toLocaleString()}
                   </span>
                 </div>
               </div>
               <div className={`w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center mr-4 sm:mr-5 transition-colors bg-white/20 backdrop-blur-md text-white shadow-xl`}>
-                <BookOpen size={20} className="sm:w-7 h-7" />
+                <Video size={20} className="sm:w-7 h-7" />
               </div>
               <div className="flex-grow">
-                <h4 className={`font-black uppercase tracking-wide transition-colors text-xs sm:text-base text-white`}>ĐĂNG KÝ THÁNG HỌC TIẾNG ANH MIỄN PHÍ CHO GIÁO VIÊN 2026</h4>
-                <p className={`text-[10px] sm:text-sm text-white/80`}>ĐĂNG KÝ HỌC TIẾNG ANH MIỄN PHÍ</p>
+                <h4 className={`font-black uppercase tracking-wide transition-colors text-xs sm:text-base text-white`}>HƯỚNG DẪN GVCN CẬP NHẬT THÔNG TIN HỌC SINH LÊN CSDL</h4>
+                <p className={`text-[10px] sm:text-sm text-white/80`}>Video hướng dẫn cập nhật dữ liệu học sinh chi tiết</p>
               </div>
             </button>
           </div>

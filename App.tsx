@@ -1115,7 +1115,7 @@ const App: React.FC = () => {
 
             <button 
               onClick={() => {
-                handleResourceClick('HƯỚNG DẪN GVCN CẬP NHẬT THÔNG TIN HỌC SINH LÊN CSDL', 'https://youtu.be/AexaR5R-gs0');
+                handleResourceClick('HƯỚNG DẪN GVCN CẬP NHẬT THÔNG TIN HỌC SINH LÊN CSDL', 'https://youtu.be/uUIZmVnSUmE');
               }}
               className={`group flex items-center p-4 sm:p-6 border rounded-[1.5rem] sm:rounded-[2rem] transition-all hover:-translate-y-1 relative text-left w-full shadow-lg ${isDarkMode ? 'bg-gradient-to-br from-blue-900 to-indigo-950 border-white/10 shadow-blue-900/20' : 'bg-gradient-to-br from-blue-600 to-indigo-600 border-white/20 shadow-blue-200'}`}
             >

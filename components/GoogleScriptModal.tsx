@@ -10,54 +10,63 @@ export const GoogleScriptModal: React.FC<GoogleScriptModalProps> = ({ isOpen, on
   const [copied, setCopied] = useState(false);
 
   const code = `/**
- * =========================================================
- * HỆ THỐNG TỰ ĐỘNG KHÓA Ô SAU KHI NHẬP (BẢN TỐC ĐỘ CAO)
- * =========================================================
+ * =========================================================================
+ * HỆ THỐNG TỰ ĐỘNG KHÓA Ô SAU 5 PHÚT BẤT HOẠT
+ * =========================================================================
  */
+
+// Cấu hình thời gian chờ: ĐÚNG 5 PHÚT
+var INACTIVITY_MINUTES = 5;
 
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu('🛡️ Cài đặt Khóa')
-    .addItem('🚀 BƯỚC 1: Cấp quyền và Bật Hệ Thống', 'installTrigger')
-    .addItem('🎯 BƯỚC 2: Ghi nhớ VÙNG ĐANG BÔI ĐEN', 'setAutoLockRangeFast')
+    .addItem('🚀 BƯỚC 1: Cấp quyền và Bật Hệ Thống (Hẹn giờ 5 phút)', 'installTrigger')
+    .addItem('🎯 BƯỚC 2: Ghi nhớ VÙNG ĐANG BÔI ĐEN', 'setAutoLockRange')
     .addSeparator()
+    .addItem('⚡ Khóa ngay các ô đang chờ (Không cần đợi hết 5 phút)', 'forceProcessQueue')
     .addItem('🔓 MỞ KHÓA TOÀN BỘ FILE (Xóa hết khóa)', 'removeAllProtections')
-    .addItem('❌ Tắt hệ thống tự khóa (Xóa ghi nhớ)', 'clearAutolockRangeFast')
+    .addItem('❌ Tắt hệ thống tự khóa (Xóa ghi nhớ & Hàng đợi)', 'clearAutolockSystem')
     .addToUi();
 }
 
 /**
- * BƯỚC 1: HÀM CÀI ĐẶT TRÌNH KÍCH HOẠT (CHẠY LẦN ĐẦU)
+ * BƯỚC 1: CÀI ĐẶT TRÌNH KÍCH HOẠT (TRIGGER CHỈNH SỬA + TRIGGER HẸN GIỜ QUÉT)
  */
 function installTrigger() {
   try {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
     var triggers = ScriptApp.getProjectTriggers();
     for (var i = 0; i < triggers.length; i++) {
       ScriptApp.deleteTrigger(triggers[i]);
     }
     
-    // Tạo trigger mới chạy khi có người sửa ô
-    ScriptApp.newTrigger('triggerAutoLockFast')
-      .forSpreadsheet(sheet)
+    // 1. Bắt sự kiện khi có người gõ phím / sửa ô
+    ScriptApp.newTrigger('onCellEdit')
+      .forSpreadsheet(ss)
       .onEdit()
       .create();
+
+    // 2. Chạy ngầm mỗi phút để quét các ô đã đủ 5 phút
+    ScriptApp.newTrigger('processInactiveLocks')
+      .timeBased()
+      .everyMinutes(1)
+      .create();
       
-    SpreadsheetApp.getUi().alert("✅ Đã bật Hệ Thống! Tiếp theo hãy bôi đen vùng cần khóa và chọn Bước 2.");
+    SpreadsheetApp.getUi().alert("✅ Đã bật Hệ Thống! Thời gian chờ là ĐÚNG " + INACTIVITY_MINUTES + " PHÚT.\\nTiếp theo hãy bôi đen vùng cần bảo vệ và chọn Bước 2.");
   } catch(e) {
-    SpreadsheetApp.getUi().alert("Lỗi: " + e.message);
+    SpreadsheetApp.getUi().alert("Lỗi khi cài đặt: " + e.message);
   }
 }
 
 /**
- * BƯỚC 2: GHI NHỚ VÙNG CẦN KHÓA
+ * BƯỚC 2: GHI NHỚ VÙNG CẦN BẢO VỆ
  */
-function setAutoLockRangeFast() {
+function setAutoLockRange() {
   var range = SpreadsheetApp.getActiveRange();
   var rangeNotation = range.getA1Notation();
   var sheetName = range.getSheet().getName();
   
-  // Lưu vùng đã chọn vào bộ nhớ của script
   var props = PropertiesService.getScriptProperties();
   props.setProperty('AUTOLOCK_RANGE', rangeNotation);
   props.setProperty('AUTOLOCK_SHEET', sheetName);
@@ -66,43 +75,139 @@ function setAutoLockRangeFast() {
 }
 
 /**
- * HÀM CHÍNH: TỰ ĐỘNG KHÓA KHI CÓ NGƯỜI NHẬP LIỆU
+ * HÀM THEO DÕI NHẬP LIỆU: CẬP NHẬT THỜI GIAN SỬA GẦN NHẤT
+ * (Nếu người dùng sửa lại thì tự động đếm lại trọn vẹn 5 phút từ đầu)
  */
-function triggerAutoLockFast(e) {
+function onCellEdit(e) {
   if (!e) return;
   var range = e.range;
   var sheet = range.getSheet();
+  var sheetName = sheet.getName();
   
   var props = PropertiesService.getScriptProperties();
   var savedRange = props.getProperty('AUTOLOCK_RANGE');
   var savedSheet = props.getProperty('AUTOLOCK_SHEET');
   
-  // Kiểm tra nếu sửa đúng Sheet và đúng Vùng đã cài đặt
-  if (savedRange && savedSheet && sheet.getName() == savedSheet) {
+  if (savedRange && savedSheet && sheetName === savedSheet) {
     var checkRange = sheet.getRange(savedRange);
     
-    // Nếu ô vừa sửa nằm trong vùng bảo vệ
-    if (range.getRow() >= checkRange.getRow() && 
-        range.getRow() <= checkRange.getLastRow() &&
-        range.getColumn() >= checkRange.getColumn() && 
-        range.getColumn() <= checkRange.getLastColumn()) {
-      
-      // Tiến hành khóa ô đó lại ngay lập tức
-      var protection = range.protect().setDescription('Auto-locked');
-      
-      // Loại bỏ quyền sửa của mọi người (trừ Chủ sở hữu)
-      var me = Session.getEffectiveUser();
-      protection.addEditor(me);
-      protection.removeEditors(protection.getEditors());
-      if (protection.canDomainEdit()) {
-        protection.setDomainEdit(false);
+    var editRow = range.getRow();
+    var editLastRow = range.getLastRow();
+    var editCol = range.getColumn();
+    var editLastCol = range.getLastColumn();
+    
+    var checkRow = checkRange.getRow();
+    var checkLastRow = checkRange.getLastRow();
+    var checkCol = checkRange.getColumn();
+    var checkLastCol = checkRange.getLastColumn();
+    
+    var intersects = !(editLastRow < checkRow || editRow > checkLastRow || editLastCol < checkCol || editCol > checkLastCol);
+    if (!intersects) return;
+    
+    var queueJson = props.getProperty('LOCK_QUEUE');
+    var queue = queueJson ? JSON.parse(queueJson) : {};
+    
+    // Ghi nhận mốc thời gian hiện tại
+    var now = Date.now();
+    for (var r = Math.max(editRow, checkRow); r <= Math.min(editLastRow, checkLastRow); r++) {
+      for (var c = Math.max(editCol, checkCol); c <= Math.min(editLastCol, checkLastCol); c++) {
+        var cellA1 = sheet.getRange(r, c).getA1Notation();
+        var key = sheetName + "!" + cellA1;
+        queue[key] = now;
       }
     }
+    
+    props.setProperty('LOCK_QUEUE', JSON.stringify(queue));
   }
 }
 
 /**
- * HÀM MỞ KHÓA TOÀN BỘ TRANG TÍNH
+ * HÀM CHẠY NGẦM MỖI PHÚT: KHÓA CÁC Ô ĐÃ ĐỦ 5 PHÚT BẤT HOẠT
+ */
+function processInactiveLocks() {
+  var props = PropertiesService.getScriptProperties();
+  var queueJson = props.getProperty('LOCK_QUEUE');
+  if (!queueJson) return;
+  
+  var queue = JSON.parse(queueJson);
+  var keys = Object.keys(queue);
+  if (keys.length === 0) return;
+  
+  var now = Date.now();
+  var timeoutMs = INACTIVITY_MINUTES * 60 * 1000; // Đúng 5 phút = 300.000 ms
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var me = Session.getEffectiveUser();
+  
+  var remainingQueue = {};
+  var cellsToLockBySheet = {};
+  
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    var lastEditTime = queue[key];
+    
+    // Nếu ô đã không còn ai sửa đủ 5 phút
+    if (now - lastEditTime >= timeoutMs) {
+      var parts = key.split("!");
+      var sName = parts[0];
+      var a1 = parts[1];
+      if (!cellsToLockBySheet[sName]) {
+        cellsToLockBySheet[sName] = [];
+      }
+      cellsToLockBySheet[sName].push(a1);
+    } else {
+      // Chưa đủ 5 phút -> tiếp tục chờ
+      remainingQueue[key] = lastEditTime;
+    }
+  }
+  
+  // Khóa các ô đã quá 5 phút
+  for (var sName in cellsToLockBySheet) {
+    var sheet = ss.getSheetByName(sName);
+    if (!sheet) continue;
+    
+    var a1List = cellsToLockBySheet[sName];
+    for (var j = 0; j < a1List.length; j++) {
+      try {
+        var cellRange = sheet.getRange(a1List[j]);
+        if (cellRange.isBlank()) continue; // Ô trống thì không khóa
+        
+        var protection = cellRange.protect().setDescription('Khóa sau 5 phút: ' + a1List[j]);
+        protection.addEditor(me);
+        protection.removeEditors(protection.getEditors());
+        if (protection.canDomainEdit()) {
+          protection.setDomainEdit(false);
+        }
+      } catch (err) {
+        console.error("Lỗi khi khóa: " + err.message);
+      }
+    }
+  }
+  
+  props.setProperty('LOCK_QUEUE', JSON.stringify(remainingQueue));
+}
+
+/**
+ * TÙY CHỌN: KHÓA CƯỠNG CHẾ TOÀN BỘ CÁC Ô ĐANG CHỜ
+ */
+function forceProcessQueue() {
+  var props = PropertiesService.getScriptProperties();
+  var queueJson = props.getProperty('LOCK_QUEUE');
+  if (!queueJson) {
+    SpreadsheetApp.getUi().alert("Hàng đợi đang trống, không có ô nào chờ khóa.");
+    return;
+  }
+  
+  var queue = JSON.parse(queueJson);
+  for (var k in queue) {
+    queue[k] = 0;
+  }
+  props.setProperty('LOCK_QUEUE', JSON.stringify(queue));
+  processInactiveLocks();
+  SpreadsheetApp.getUi().alert("✅ Đã khóa ngay tất cả các ô trong hàng đợi!");
+}
+
+/**
+ * HÀM MỞ KHÓA TOÀN BỘ FILE
  */
 function removeAllProtections() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -114,19 +219,21 @@ function removeAllProtections() {
   for (var i = 0; i < sheetProtections.length; i++) {
     if (sheetProtections[i].canEdit()) sheetProtections[i].remove();
   }
-  SpreadsheetApp.getUi().alert("✅ Đã xóa toàn bộ các vùng đang bị khóa!");
+  
+  PropertiesService.getScriptProperties().deleteProperty('LOCK_QUEUE');
+  SpreadsheetApp.getUi().alert("✅ Đã xóa toàn bộ vùng khóa và làm sạch hàng đợi!");
 }
 
 /**
- * HÀM TẮT HỆ THỐNG (XÓA GHI NHỚ)
+ * HÀM TẮT TOÀN BỘ HỆ THỐNG
  */
-function clearAutolockRangeFast() {
+function clearAutolockSystem() {
   PropertiesService.getScriptProperties().deleteAllProperties();
   var triggers = ScriptApp.getProjectTriggers();
   for (var i = 0; i < triggers.length; i++) {
     ScriptApp.deleteTrigger(triggers[i]);
   }
-  SpreadsheetApp.getUi().alert("✅ Đã tắt tính năng tự khóa và xóa sạch bộ nhớ!");
+  SpreadsheetApp.getUi().alert("✅ Đã tắt tính năng tự khóa và xóa toàn bộ bộ nhớ!");
 }`;
 
   const handleCopy = () => {

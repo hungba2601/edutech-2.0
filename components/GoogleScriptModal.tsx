@@ -12,35 +12,83 @@ export const GoogleScriptModal: React.FC<GoogleScriptModalProps> = ({ isOpen, on
   const code = `/**
  * =========================================================================
  * HỆ THỐNG TỰ ĐỘNG KHÓA Ô SAU 5 PHÚT BẤT HOẠT
+ * (Chỉ chủ sở hữu file mới thấy menu và điều khiển được)
  * =========================================================================
  */
 
 // Cấu hình thời gian chờ: ĐÚNG 5 PHÚT
 var INACTIVITY_MINUTES = 5;
 
-function onOpen() {
-  SpreadsheetApp.getUi()
-    .createMenu('🛡️ Cài đặt Khóa')
-    .addItem('🚀 BƯỚC 1: Cấp quyền và Bật Hệ Thống (Hẹn giờ 5 phút)', 'installTrigger')
-    .addItem('🎯 BƯỚC 2: Ghi nhớ VÙNG ĐANG BÔI ĐEN', 'setAutoLockRange')
-    .addSeparator()
-    .addItem('⚡ Khóa ngay các ô đang chờ (Không cần đợi hết 5 phút)', 'forceProcessQueue')
-    .addItem('🔓 MỞ KHÓA TOÀN BỘ FILE (Xóa hết khóa)', 'removeAllProtections')
-    .addItem('❌ Tắt hệ thống tự khóa (Xóa ghi nhớ & Hàng đợi)', 'clearAutolockSystem')
-    .addToUi();
+// =========================================================================
+// HÀM KIỂM TRA QUYỀN SỞ HỮU
+// =========================================================================
+
+/**
+ * Kiểm tra xem người dùng hiện tại có phải chủ sở hữu file không.
+ * Trả về true nếu là chủ sở hữu, false nếu không phải hoặc không xác định được.
+ */
+function isOwner() {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var currentUser = Session.getActiveUser().getEmail();
+    var owner = ss.getOwner().getEmail();
+    // Nếu không lấy được email (chia sẻ ngoài tổ chức) -> mặc định không phải owner
+    if (!currentUser || currentUser === '') return false;
+    return currentUser === owner;
+  } catch (e) {
+    return false;
+  }
 }
 
 /**
- * BƯỚC 1: CÀI ĐẶT TRÌNH KÍCH HOẠT (TRIGGER CHỈNH SỬA + TRIGGER HẸN GIỜ QUÉT)
+ * Chặn thao tác nếu không phải chủ sở hữu.
+ * Trả về true nếu BỊ CHẶN (không phải owner), false nếu được phép.
+ */
+function blockIfNotOwner() {
+  if (!isOwner()) {
+    SpreadsheetApp.getUi().alert("⛔ Bạn không có quyền thực hiện thao tác này.\\nChỉ chủ sở hữu file mới được phép.");
+    return true;
+  }
+  return false;
+}
+
+// =========================================================================
+// MENU - CHỈ HIỆN CHO CHỦ SỞ HỮU
+// =========================================================================
+
+function onOpen() {
+  // Chỉ chủ sở hữu file mới thấy menu cài đặt khóa
+  if (isOwner()) {
+    SpreadsheetApp.getUi()
+      .createMenu('🛡️ Cài đặt Khóa')
+      .addItem('🚀 BƯỚC 1: Cấp quyền và Bật Hệ Thống (Hẹn giờ 5 phút)', 'installTrigger')
+      .addItem('🎯 BƯỚC 2: Ghi nhớ VÙNG ĐANG BÔI ĐEN', 'setAutoLockRange')
+      .addSeparator()
+      .addItem('⚡ Khóa ngay các ô đang chờ (Không cần đợi hết 5 phút)', 'forceProcessQueue')
+      .addItem('🔓 MỞ KHÓA TOÀN BỘ FILE (Xóa hết khóa)', 'removeAllProtections')
+      .addItem('❌ Tắt hệ thống tự khóa (Xóa ghi nhớ & Hàng đợi)', 'clearAutolockSystem')
+      .addToUi();
+  }
+}
+
+// =========================================================================
+// BƯỚC 1: CÀI ĐẶT TRÌNH KÍCH HOẠT (TRIGGER)
+// =========================================================================
+
+/**
+ * Cài đặt trigger chỉnh sửa + trigger hẹn giờ quét mỗi phút.
+ * Chỉ chủ sở hữu mới được gọi.
  */
 function installTrigger() {
+  if (blockIfNotOwner()) return;
+
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var triggers = ScriptApp.getProjectTriggers();
     for (var i = 0; i < triggers.length; i++) {
       ScriptApp.deleteTrigger(triggers[i]);
     }
-    
+
     // 1. Bắt sự kiện khi có người gõ phím / sửa ô
     ScriptApp.newTrigger('onCellEdit')
       .forSpreadsheet(ss)
@@ -52,61 +100,84 @@ function installTrigger() {
       .timeBased()
       .everyMinutes(1)
       .create();
-      
-    SpreadsheetApp.getUi().alert("✅ Đã bật Hệ Thống! Thời gian chờ là ĐÚNG " + INACTIVITY_MINUTES + " PHÚT.\\nTiếp theo hãy bôi đen vùng cần bảo vệ và chọn Bước 2.");
-  } catch(e) {
+
+    SpreadsheetApp.getUi().alert(
+      "✅ Đã bật Hệ Thống! Thời gian chờ là ĐÚNG " + INACTIVITY_MINUTES + " PHÚT.\\n" +
+      "Tiếp theo hãy bôi đen vùng cần bảo vệ và chọn Bước 2."
+    );
+  } catch (e) {
     SpreadsheetApp.getUi().alert("Lỗi khi cài đặt: " + e.message);
   }
 }
 
+// =========================================================================
+// BƯỚC 2: GHI NHỚ VÙNG CẦN BẢO VỆ
+// =========================================================================
+
 /**
- * BƯỚC 2: GHI NHỚ VÙNG CẦN BẢO VỆ
+ * Ghi nhớ vùng đang bôi đen làm vùng tự động khóa.
+ * Chỉ chủ sở hữu mới được gọi.
  */
 function setAutoLockRange() {
+  if (blockIfNotOwner()) return;
+
   var range = SpreadsheetApp.getActiveRange();
   var rangeNotation = range.getA1Notation();
   var sheetName = range.getSheet().getName();
-  
+
   var props = PropertiesService.getScriptProperties();
   props.setProperty('AUTOLOCK_RANGE', rangeNotation);
   props.setProperty('AUTOLOCK_SHEET', sheetName);
-  
-  SpreadsheetApp.getUi().alert("✅ Đã ghi nhớ vùng: " + rangeNotation + " tại Sheet: " + sheetName);
+
+  SpreadsheetApp.getUi().alert(
+    "✅ Đã ghi nhớ vùng: " + rangeNotation + " tại Sheet: " + sheetName
+  );
 }
 
+// =========================================================================
+// HÀM THEO DÕI NHẬP LIỆU (TỰ ĐỘNG - KHÔNG CẦN KIỂM TRA OWNER)
+// =========================================================================
+
 /**
- * HÀM THEO DÕI NHẬP LIỆU: CẬP NHẬT THỜI GIAN SỬA GẦN NHẤT
- * (Nếu người dùng sửa lại thì tự động đếm lại trọn vẹn 5 phút từ đầu)
+ * Cập nhật thời gian sửa gần nhất khi có ai đó chỉnh sửa ô trong vùng bảo vệ.
+ * Nếu người dùng sửa lại thì tự động đếm lại trọn vẹn 5 phút từ đầu.
+ * Hàm này chạy cho TẤT CẢ người dùng (không giới hạn owner).
  */
 function onCellEdit(e) {
   if (!e) return;
   var range = e.range;
   var sheet = range.getSheet();
   var sheetName = sheet.getName();
-  
+
   var props = PropertiesService.getScriptProperties();
   var savedRange = props.getProperty('AUTOLOCK_RANGE');
   var savedSheet = props.getProperty('AUTOLOCK_SHEET');
-  
+
   if (savedRange && savedSheet && sheetName === savedSheet) {
     var checkRange = sheet.getRange(savedRange);
-    
+
     var editRow = range.getRow();
     var editLastRow = range.getLastRow();
     var editCol = range.getColumn();
     var editLastCol = range.getLastColumn();
-    
+
     var checkRow = checkRange.getRow();
     var checkLastRow = checkRange.getLastRow();
     var checkCol = checkRange.getColumn();
     var checkLastCol = checkRange.getLastColumn();
-    
-    var intersects = !(editLastRow < checkRow || editRow > checkLastRow || editLastCol < checkCol || editCol > checkLastCol);
+
+    // Kiểm tra ô được sửa có nằm trong vùng bảo vệ không
+    var intersects = !(
+      editLastRow < checkRow ||
+      editRow > checkLastRow ||
+      editLastCol < checkCol ||
+      editCol > checkLastCol
+    );
     if (!intersects) return;
-    
+
     var queueJson = props.getProperty('LOCK_QUEUE');
     var queue = queueJson ? JSON.parse(queueJson) : {};
-    
+
     // Ghi nhận mốc thời gian hiện tại
     var now = Date.now();
     for (var r = Math.max(editRow, checkRow); r <= Math.min(editLastRow, checkLastRow); r++) {
@@ -116,35 +187,40 @@ function onCellEdit(e) {
         queue[key] = now;
       }
     }
-    
+
     props.setProperty('LOCK_QUEUE', JSON.stringify(queue));
   }
 }
 
+// =========================================================================
+// HÀM CHẠY NGẦM MỖI PHÚT: KHÓA CÁC Ô ĐÃ ĐỦ 5 PHÚT BẤT HOẠT
+// =========================================================================
+
 /**
- * HÀM CHẠY NGẦM MỖI PHÚT: KHÓA CÁC Ô ĐÃ ĐỦ 5 PHÚT BẤT HOẠT
+ * Quét hàng đợi, khóa các ô đã không ai sửa đủ 5 phút.
+ * Hàm này chạy tự động bởi trigger hẹn giờ (không cần kiểm tra owner).
  */
 function processInactiveLocks() {
   var props = PropertiesService.getScriptProperties();
   var queueJson = props.getProperty('LOCK_QUEUE');
   if (!queueJson) return;
-  
+
   var queue = JSON.parse(queueJson);
   var keys = Object.keys(queue);
   if (keys.length === 0) return;
-  
+
   var now = Date.now();
   var timeoutMs = INACTIVITY_MINUTES * 60 * 1000; // Đúng 5 phút = 300.000 ms
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var me = Session.getEffectiveUser();
-  
+
   var remainingQueue = {};
   var cellsToLockBySheet = {};
-  
+
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i];
     var lastEditTime = queue[key];
-    
+
     // Nếu ô đã không còn ai sửa đủ 5 phút
     if (now - lastEditTime >= timeoutMs) {
       var parts = key.split("!");
@@ -159,18 +235,18 @@ function processInactiveLocks() {
       remainingQueue[key] = lastEditTime;
     }
   }
-  
+
   // Khóa các ô đã quá 5 phút
   for (var sName in cellsToLockBySheet) {
     var sheet = ss.getSheetByName(sName);
     if (!sheet) continue;
-    
+
     var a1List = cellsToLockBySheet[sName];
     for (var j = 0; j < a1List.length; j++) {
       try {
         var cellRange = sheet.getRange(a1List[j]);
         if (cellRange.isBlank()) continue; // Ô trống thì không khóa
-        
+
         var protection = cellRange.protect().setDescription('Khóa sau 5 phút: ' + a1List[j]);
         protection.addEditor(me);
         protection.removeEditors(protection.getEditors());
@@ -178,63 +254,110 @@ function processInactiveLocks() {
           protection.setDomainEdit(false);
         }
       } catch (err) {
-        console.error("Lỗi khi khóa: " + err.message);
+        console.error("Lỗi khi khóa ô " + a1List[j] + ": " + err.message);
       }
     }
   }
-  
+
   props.setProperty('LOCK_QUEUE', JSON.stringify(remainingQueue));
 }
 
+// =========================================================================
+// TÙY CHỌN: KHÓA CƯỠNG CHẾ TOÀN BỘ CÁC Ô ĐANG CHỜ
+// =========================================================================
+
 /**
- * TÙY CHỌN: KHÓA CƯỠNG CHẾ TOÀN BỘ CÁC Ô ĐANG CHỜ
+ * Khóa ngay lập tức tất cả các ô trong hàng đợi mà không cần đợi đủ 5 phút.
+ * Chỉ chủ sở hữu mới được gọi.
  */
 function forceProcessQueue() {
+  if (blockIfNotOwner()) return;
+
   var props = PropertiesService.getScriptProperties();
   var queueJson = props.getProperty('LOCK_QUEUE');
   if (!queueJson) {
     SpreadsheetApp.getUi().alert("Hàng đợi đang trống, không có ô nào chờ khóa.");
     return;
   }
-  
+
   var queue = JSON.parse(queueJson);
+  var keys = Object.keys(queue);
+  if (keys.length === 0) {
+    SpreadsheetApp.getUi().alert("Hàng đợi đang trống, không có ô nào chờ khóa.");
+    return;
+  }
+
+  // Đặt tất cả thời gian về 0 để trigger xử lý ngay
   for (var k in queue) {
     queue[k] = 0;
   }
   props.setProperty('LOCK_QUEUE', JSON.stringify(queue));
   processInactiveLocks();
-  SpreadsheetApp.getUi().alert("✅ Đã khóa ngay tất cả các ô trong hàng đợi!");
+  SpreadsheetApp.getUi().alert("✅ Đã khóa ngay tất cả " + keys.length + " ô trong hàng đợi!");
 }
 
+// =========================================================================
+// MỞ KHÓA TOÀN BỘ FILE
+// =========================================================================
+
 /**
- * HÀM MỞ KHÓA TOÀN BỘ FILE
+ * Xóa toàn bộ vùng khóa (range protection + sheet protection) và làm sạch hàng đợi.
+ * Chỉ chủ sở hữu mới được gọi.
  */
 function removeAllProtections() {
+  if (blockIfNotOwner()) return;
+
   var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var count = 0;
+
   var rangeProtections = ss.getProtections(SpreadsheetApp.ProtectionType.RANGE);
   for (var i = 0; i < rangeProtections.length; i++) {
-    if (rangeProtections[i].canEdit()) rangeProtections[i].remove();
+    if (rangeProtections[i].canEdit()) {
+      rangeProtections[i].remove();
+      count++;
+    }
   }
+
   var sheetProtections = ss.getProtections(SpreadsheetApp.ProtectionType.SHEET);
   for (var i = 0; i < sheetProtections.length; i++) {
-    if (sheetProtections[i].canEdit()) sheetProtections[i].remove();
+    if (sheetProtections[i].canEdit()) {
+      sheetProtections[i].remove();
+      count++;
+    }
   }
-  
+
   PropertiesService.getScriptProperties().deleteProperty('LOCK_QUEUE');
-  SpreadsheetApp.getUi().alert("✅ Đã xóa toàn bộ vùng khóa và làm sạch hàng đợi!");
+  SpreadsheetApp.getUi().alert(
+    "✅ Đã xóa " + count + " vùng khóa và làm sạch hàng đợi!"
+  );
 }
 
+// =========================================================================
+// TẮT TOÀN BỘ HỆ THỐNG
+// =========================================================================
+
 /**
- * HÀM TẮT TOÀN BỘ HỆ THỐNG
+ * Xóa toàn bộ cài đặt, hàng đợi, và trigger. Tắt hoàn toàn hệ thống tự khóa.
+ * Chỉ chủ sở hữu mới được gọi.
  */
 function clearAutolockSystem() {
+  if (blockIfNotOwner()) return;
+
   PropertiesService.getScriptProperties().deleteAllProperties();
+
   var triggers = ScriptApp.getProjectTriggers();
+  var triggerCount = triggers.length;
   for (var i = 0; i < triggers.length; i++) {
     ScriptApp.deleteTrigger(triggers[i]);
   }
-  SpreadsheetApp.getUi().alert("✅ Đã tắt tính năng tự khóa và xóa toàn bộ bộ nhớ!");
-}`;
+
+  SpreadsheetApp.getUi().alert(
+    "✅ Đã tắt tính năng tự khóa!\\n" +
+    "- Đã xóa " + triggerCount + " trigger\\n" +
+    "- Đã xóa toàn bộ bộ nhớ cài đặt"
+  );
+}
+`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(code);

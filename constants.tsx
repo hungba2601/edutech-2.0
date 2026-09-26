@@ -30,7 +30,8 @@ import {
   Shuffle,
   Printer,
   Image,
-  Video
+  Video,
+  Code
 } from 'lucide-react';
 import { Category } from './types';
 
@@ -193,6 +194,17 @@ export const APP_CATEGORIES: Category[] = [
         buttonLabel: 'Đăng nhập',
         secondaryLabel: 'Hướng dẫn',
         videoUrl: 'https://youtube.com'
+      },
+      {
+        id: 'gia-su-tin-hoc-thcs',
+        title: 'GIA SƯ TIN HỌC THCS',
+        icon: <Code className="w-8 h-8" />,
+        color: 'bg-emerald-600',
+        description: 'Trợ lý học tập thông minh đồng hành ôn luyện kiến thức, giải bài tập và thực hành môn Tin học THCS.',
+        isNew: true,
+        isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn'
       }
     ]
   },

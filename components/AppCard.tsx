@@ -25,7 +25,7 @@ export const AppCard: React.FC<AppCardProps> = ({ app, onAction, onLogin, count 
 
         {/* NEW Badge */}
         {app.isNew && (
-          <span className={`${(app.id === 'skkn-ai' || app.id === 'biology-sim' || app.id === 'learning-assistant' || app.id === 'ai-virtual-assistant' || app.id === 'text-to-speech' || app.id === 'pdf-to-word' || app.id === 'slide-assistant' || app.id === 'word-to-katex' || app.id === 'exam-shuffler-ai' || app.id === 'pdf-editor-nph' || app.id === 'tool-tao-khgd') ? 'bg-red-600 shadow-red-200' : 'bg-gradient-to-r from-emerald-500 to-teal-400 shadow-emerald-200'} text-white text-[9px] sm:text-[10px] font-black px-2 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-lg animate-pulse uppercase tracking-wider`}>
+          <span className={`${(app.id === 'skkn-ai' || app.id === 'biology-sim' || app.id === 'learning-assistant' || app.id === 'ai-virtual-assistant' || app.id === 'text-to-speech' || app.id === 'pdf-to-word' || app.id === 'slide-assistant' || app.id === 'word-to-katex' || app.id === 'exam-shuffler-ai' || app.id === 'pdf-editor-nph' || app.id === 'tool-tao-khgd' || app.id === 'gia-su-tin-hoc-thcs') ? 'bg-red-600 shadow-red-200' : 'bg-gradient-to-r from-emerald-500 to-teal-400 shadow-emerald-200'} text-white text-[9px] sm:text-[10px] font-black px-2 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-lg animate-pulse uppercase tracking-wider`}>
             NEW
           </span>
         )}

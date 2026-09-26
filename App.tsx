@@ -54,6 +54,7 @@ import { PensionCalculator154Modal } from './components/PensionCalculator154Moda
 import { PensionCalculatorBHXHModal } from './components/PensionCalculatorBHXHModal';
 import { ExcelMergerGuideModal } from './components/ExcelMergerGuideModal';
 import { KHGDPhuLucModal } from './components/KHGDPhuLucModal';
+import { GiaSuTinHocModal } from './components/GiaSuTinHocModal';
 
 import { NotificationModal } from './components/NotificationModal';
 import { LayoutGrid, CreditCard, Youtube, Key, Sigma, Phone, FileCode, ClipboardList, Download, Sun, Moon, Table, FileSpreadsheet, PlayCircle, Code, FileText, ArrowRight, Video, Image, GraduationCap, Users, BookOpen, Target, Eye, Lock, EyeOff, Bell, CalendarDays, FileUp } from 'lucide-react';
@@ -197,6 +198,7 @@ const App: React.FC = () => {
   const [isPensionCalculatorBHXHModalOpen, setIsPensionCalculatorBHXHModalOpen] = useState(false);
   const [isExcelMergerModalOpen, setIsExcelMergerModalOpen] = useState(false);
   const [isKHGDPhuLucModalOpen, setIsKHGDPhuLucModalOpen] = useState(false);
+  const [isGiaSuTinHocModalOpen, setIsGiaSuTinHocModalOpen] = useState(false);
 
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const [notificationText, setNotificationText] = useState("");
@@ -295,6 +297,7 @@ const App: React.FC = () => {
     setIsPensionCalculatorBHXHModalOpen(false);
     setIsExcelMergerModalOpen(false);
     setIsKHGDPhuLucModalOpen(false);
+    setIsGiaSuTinHocModalOpen(false);
 
     setIsNotificationModalOpen(false);
   };
@@ -411,6 +414,8 @@ const App: React.FC = () => {
       setIsExcelMergerModalOpen(true);
     } else if (id === 'tool-tao-khgd') {
       setIsKHGDPhuLucModalOpen(true);
+    } else if (id === 'gia-su-tin-hoc-thcs') {
+      setIsGiaSuTinHocModalOpen(true);
     }
   };
 
@@ -466,7 +471,8 @@ const App: React.FC = () => {
       'pension-calculator-154': 'https://tinh-luong-huu.vercel.app/',
       'pension-calculator-bhxh': 'https://tinh-che-do-huu-bhxh.vercel.app/',
       'excel-merger': 'https://ghep-file-excel.vercel.app/',
-      'tool-tao-khgd': 'https://tool-tao-khgd-ai.vercel.app/'
+      'tool-tao-khgd': 'https://tool-tao-khgd-ai.vercel.app/',
+      'gia-su-tin-hoc-thcs': 'https://giasu-tinhoc-thcs.vercel.app/'
     };
 
     if (links[id]) {
@@ -1429,6 +1435,11 @@ const App: React.FC = () => {
         onClose={() => setIsKHGDPhuLucModalOpen(false)}
         onLogin={() => handleLoginAction('tool-tao-khgd')}
         videoUrl={getVideoUrl('tool-tao-khgd')}
+      />
+      <GiaSuTinHocModal
+        isOpen={isGiaSuTinHocModalOpen}
+        onClose={() => setIsGiaSuTinHocModalOpen(false)}
+        onLogin={() => handleLoginAction('gia-su-tin-hoc-thcs')}
       />
 
       <NotificationModal

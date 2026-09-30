@@ -27,7 +27,7 @@ export const GiaSuTinHocModal: React.FC<GiaSuTinHocModalProps> = ({ isOpen, onCl
             </div>
             <div>
               <h2 className="text-xl sm:text-2xl font-black font-outfit uppercase tracking-tighter leading-tight text-white drop-shadow-sm">
-                GIA SƯ TIN HỌC THCS
+                GIA SƯ TIN HỌC AI
               </h2>
               <div className="flex items-center space-x-2 mt-1.5">
                 <span className="bg-red-500 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase shadow-sm animate-pulse tracking-wider">
@@ -59,7 +59,7 @@ export const GiaSuTinHocModal: React.FC<GiaSuTinHocModalProps> = ({ isOpen, onCl
                 Giới thiệu ứng dụng
               </h3>
               <p className="text-sm text-slate-700 dark:text-slate-300 mt-1 leading-relaxed">
-                <strong>GIA SƯ TIN HỌC THCS</strong> là nền tảng trợ lý học tập trực tuyến thông minh, giúp học sinh cấp Trung học cơ sở nắm vững kiến thức lý thuyết, giải bài tập và thực hành môn Tin học theo chương trình mới một cách dễ dàng và hiệu quả.
+                <strong>GIA SƯ TIN HỌC AI</strong> là nền tảng trợ lý học tập trực tuyến thông minh bằng trí tuệ nhân tạo, hỗ trợ toàn diện cho học sinh cả 3 cấp học (Tiểu học, THCS và THPT) nắm vững kiến thức lý thuyết, giải bài tập và thực hành môn Tin học theo chương trình mới một cách dễ dàng và hiệu quả.
               </p>
             </div>
           </div>
@@ -79,7 +79,7 @@ export const GiaSuTinHocModal: React.FC<GiaSuTinHocModalProps> = ({ isOpen, onCl
                     Nhấp vào nút &ldquo;Đăng nhập&rdquo;
                   </h5>
                   <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
-                    Hệ thống sẽ chuyển bạn đến địa chỉ web app chính thức: <span className="text-emerald-600 dark:text-emerald-400 font-semibold underline">https://giasu-tinhoc-thcs.vercel.app/</span>
+                    Hệ thống sẽ chuyển bạn đến địa chỉ web app chính thức: <span className="text-emerald-600 dark:text-emerald-400 font-semibold underline">https://giasu-tinhoc-ai.vercel.app/</span>
                   </p>
                 </div>
               </div>
@@ -90,10 +90,10 @@ export const GiaSuTinHocModal: React.FC<GiaSuTinHocModalProps> = ({ isOpen, onCl
                 </div>
                 <div>
                   <h5 className="text-sm font-bold text-slate-900 dark:text-white">
-                    Chọn chương trình & khối lớp
+                    Chọn cấp học & khối lớp
                   </h5>
                   <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
-                    Lựa chọn nội dung theo khối lớp (Lớp 6, 7, 8, 9) hoặc chuyên đề lý thuyết/thực hành bạn muốn học.
+                    Lựa chọn nội dung theo cấp học (Tiểu học, THCS, THPT), các khối lớp từ Lớp 3 đến Lớp 12 hoặc chuyên đề lý thuyết/thực hành bạn muốn học.
                   </p>
                 </div>
               </div>

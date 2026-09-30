@@ -472,7 +472,7 @@ const App: React.FC = () => {
       'pension-calculator-bhxh': 'https://tinh-che-do-huu-bhxh.vercel.app/',
       'excel-merger': 'https://ghep-file-excel.vercel.app/',
       'tool-tao-khgd': 'https://tool-tao-khgd-ai.vercel.app/',
-      'gia-su-tin-hoc-thcs': 'https://giasu-tinhoc-thcs.vercel.app/'
+      'gia-su-tin-hoc-thcs': 'https://giasu-tinhoc-ai.vercel.app/'
     };
 
     if (links[id]) {

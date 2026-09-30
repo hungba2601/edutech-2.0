@@ -197,14 +197,14 @@ export const APP_CATEGORIES: Category[] = [
       },
       {
         id: 'gia-su-tin-hoc-thcs',
-        title: 'GIA SƯ TIN HỌC THCS',
+        title: 'GIA SƯ TIN HỌC AI',
         icon: <Code className="w-8 h-8" />,
         color: 'bg-emerald-600',
-        description: 'Trợ lý học tập thông minh đồng hành ôn luyện kiến thức, giải bài tập và thực hành môn Tin học THCS.',
+        description: 'Trợ lý học tập thông minh đồng hành ôn luyện kiến thức, giải bài tập và thực hành môn Tin học cho cả 3 cấp học (Tiểu học, THCS, THPT) với sức mạnh từ AI.',
         isNew: true,
         isFree: true,
         buttonLabel: 'Đăng nhập',
-        secondaryLabel: 'Hướng dẫn'
+        secondaryLabel: 'Giới thiệu'
       }
     ]
   },

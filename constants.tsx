@@ -31,7 +31,8 @@ import {
   Printer,
   Image,
   Video,
-  Code
+  Code,
+  CalendarDays
 } from 'lucide-react';
 import { Category } from './types';
 
@@ -489,6 +490,17 @@ export const APP_CATEGORIES: Category[] = [
         description: 'Công cụ ghép file excel , nhiều file thành 1 file excel 1 sheet, nhiều sheet, file excel nhiều sheet thành 1 sheet',
         isNew: true,
         isFree: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn'
+      },
+      {
+        id: 'xep-tkb-pro-2',
+        title: 'XẾP TKB PRO 2.0',
+        icon: <CalendarDays className="w-8 h-8" />,
+        color: 'bg-blue-600',
+        description: 'Hệ thống xếp thời khóa biểu thông minh thế hệ mới, tự động phân công giảng dạy, tối ưu hóa ràng buộc sư phạm và tránh trùng lịch cho giáo viên và nhà trường.',
+        isNew: true,
+        isHot: true,
         buttonLabel: 'Đăng nhập',
         secondaryLabel: 'Hướng dẫn'
       }

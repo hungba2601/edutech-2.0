@@ -55,6 +55,7 @@ import { PensionCalculatorBHXHModal } from './components/PensionCalculatorBHXHMo
 import { ExcelMergerGuideModal } from './components/ExcelMergerGuideModal';
 import { KHGDPhuLucModal } from './components/KHGDPhuLucModal';
 import { GiaSuTinHocModal } from './components/GiaSuTinHocModal';
+import { XepTkbProModal } from './components/XepTkbProModal';
 
 import { NotificationModal } from './components/NotificationModal';
 import { LayoutGrid, CreditCard, Youtube, Key, Sigma, Phone, FileCode, ClipboardList, Download, Sun, Moon, Table, FileSpreadsheet, PlayCircle, Code, FileText, ArrowRight, Video, Image, GraduationCap, Users, BookOpen, Target, Eye, Lock, EyeOff, Bell, CalendarDays, FileUp } from 'lucide-react';
@@ -199,6 +200,7 @@ const App: React.FC = () => {
   const [isExcelMergerModalOpen, setIsExcelMergerModalOpen] = useState(false);
   const [isKHGDPhuLucModalOpen, setIsKHGDPhuLucModalOpen] = useState(false);
   const [isGiaSuTinHocModalOpen, setIsGiaSuTinHocModalOpen] = useState(false);
+  const [isXepTkbProModalOpen, setIsXepTkbProModalOpen] = useState(false);
 
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const [notificationText, setNotificationText] = useState("");
@@ -298,6 +300,7 @@ const App: React.FC = () => {
     setIsExcelMergerModalOpen(false);
     setIsKHGDPhuLucModalOpen(false);
     setIsGiaSuTinHocModalOpen(false);
+    setIsXepTkbProModalOpen(false);
 
     setIsNotificationModalOpen(false);
   };
@@ -416,6 +419,8 @@ const App: React.FC = () => {
       setIsKHGDPhuLucModalOpen(true);
     } else if (id === 'gia-su-tin-hoc-thcs') {
       setIsGiaSuTinHocModalOpen(true);
+    } else if (id === 'xep-tkb-pro-2') {
+      setIsXepTkbProModalOpen(true);
     }
   };
 
@@ -472,7 +477,8 @@ const App: React.FC = () => {
       'pension-calculator-bhxh': 'https://tinh-che-do-huu-bhxh.vercel.app/',
       'excel-merger': 'https://ghep-file-excel.vercel.app/',
       'tool-tao-khgd': 'https://tool-tao-khgd-ai.vercel.app/',
-      'gia-su-tin-hoc-thcs': 'https://giasu-tinhoc-ai.vercel.app/'
+      'gia-su-tin-hoc-thcs': 'https://giasu-tinhoc-ai.vercel.app/',
+      'xep-tkb-pro-2': 'https://tkbpro20.vercel.app/'
     };
 
     if (links[id]) {
@@ -1463,6 +1469,11 @@ const App: React.FC = () => {
         isOpen={isGiaSuTinHocModalOpen}
         onClose={() => setIsGiaSuTinHocModalOpen(false)}
         onLogin={() => handleLoginAction('gia-su-tin-hoc-thcs')}
+      />
+      <XepTkbProModal
+        isOpen={isXepTkbProModalOpen}
+        onClose={() => setIsXepTkbProModalOpen(false)}
+        onLogin={() => handleLoginAction('xep-tkb-pro-2')}
       />
 
       <NotificationModal

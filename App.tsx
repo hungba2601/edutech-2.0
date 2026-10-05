@@ -1265,7 +1265,7 @@ const App: React.FC = () => {
 
             <button 
               onClick={() => {
-                handleResourceClick('HƯỚNG DẪN CBCNV THỰC HIỆN ĐÁNH GIÁ KPI TRÊN HỆ THỐNG ICPV', 'https://youtu.be/N0ZmrxMnaxM');
+                handleResourceClick('HƯỚNG DẪN CBCNV THỰC HIỆN ĐÁNH GIÁ KPI TRÊN HỆ THỐNG ICPV', 'https://youtu.be/0PaTPDQW5Ys');
               }}
               className={`group flex items-center p-4 sm:p-6 border rounded-[1.5rem] sm:rounded-[2rem] transition-all hover:-translate-y-1 relative text-left w-full shadow-lg ${isDarkMode ? 'bg-gradient-to-br from-emerald-900 to-teal-950 border-white/10 shadow-emerald-900/20' : 'bg-gradient-to-br from-emerald-600 to-teal-700 border-white/20 shadow-emerald-200'}`}
             >

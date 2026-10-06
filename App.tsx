@@ -56,6 +56,7 @@ import { ExcelMergerGuideModal } from './components/ExcelMergerGuideModal';
 import { KHGDPhuLucModal } from './components/KHGDPhuLucModal';
 import { GiaSuTinHocModal } from './components/GiaSuTinHocModal';
 import { XepTkbProModal } from './components/XepTkbProModal';
+import { ExcelKPIModal } from './components/ExcelKPIModal';
 
 import { NotificationModal } from './components/NotificationModal';
 import { LayoutGrid, CreditCard, Youtube, Key, Sigma, Phone, FileCode, ClipboardList, Download, Sun, Moon, Table, FileSpreadsheet, PlayCircle, Code, FileText, ArrowRight, Video, Image, GraduationCap, Users, BookOpen, Target, Eye, Lock, EyeOff, Bell, CalendarDays, FileUp } from 'lucide-react';
@@ -201,6 +202,7 @@ const App: React.FC = () => {
   const [isKHGDPhuLucModalOpen, setIsKHGDPhuLucModalOpen] = useState(false);
   const [isGiaSuTinHocModalOpen, setIsGiaSuTinHocModalOpen] = useState(false);
   const [isXepTkbProModalOpen, setIsXepTkbProModalOpen] = useState(false);
+  const [isExcelKPIModalOpen, setIsExcelKPIModalOpen] = useState(false);
 
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const [notificationText, setNotificationText] = useState("");
@@ -301,6 +303,7 @@ const App: React.FC = () => {
     setIsKHGDPhuLucModalOpen(false);
     setIsGiaSuTinHocModalOpen(false);
     setIsXepTkbProModalOpen(false);
+    setIsExcelKPIModalOpen(false);
 
     setIsNotificationModalOpen(false);
   };
@@ -421,6 +424,8 @@ const App: React.FC = () => {
       setIsGiaSuTinHocModalOpen(true);
     } else if (id === 'xep-tkb-pro-2') {
       setIsXepTkbProModalOpen(true);
+    } else if (id === 'tao-mau-excel-kpi') {
+      setIsExcelKPIModalOpen(true);
     }
   };
 
@@ -478,7 +483,8 @@ const App: React.FC = () => {
       'excel-merger': 'https://ghep-file-excel.vercel.app/',
       'tool-tao-khgd': 'https://tool-tao-khgd-ai.vercel.app/',
       'gia-su-tin-hoc-thcs': 'https://giasu-tinhoc-ai.vercel.app/',
-      'xep-tkb-pro-2': 'https://tkbpro20.vercel.app/'
+      'xep-tkb-pro-2': 'https://tkbpro20.vercel.app/',
+      'tao-mau-excel-kpi': 'https://kpi-nph.vercel.app/'
     };
 
     if (links[id]) {
@@ -1520,6 +1526,11 @@ const App: React.FC = () => {
         isOpen={isXepTkbProModalOpen}
         onClose={() => setIsXepTkbProModalOpen(false)}
         onLogin={() => handleLoginAction('xep-tkb-pro-2')}
+      />
+      <ExcelKPIModal
+        isOpen={isExcelKPIModalOpen}
+        onClose={() => setIsExcelKPIModalOpen(false)}
+        onLogin={() => handleLoginAction('tao-mau-excel-kpi')}
       />
 
       <NotificationModal

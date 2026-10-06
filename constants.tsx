@@ -503,6 +503,17 @@ export const APP_CATEGORIES: Category[] = [
         isHot: true,
         buttonLabel: 'Đăng nhập',
         secondaryLabel: 'Hướng dẫn'
+      },
+      {
+        id: 'tao-mau-excel-kpi',
+        title: 'TẠO FILE MẪU EXCEL KPI',
+        icon: <FileSpreadsheet className="w-8 h-8" />,
+        color: 'bg-emerald-600',
+        description: 'Công cụ hỗ trợ tạo lập và chuẩn hóa biểu mẫu Excel đánh giá chỉ số KPI, tự động tính toán, phân bổ trọng số và xuất dữ liệu chuyên nghiệp.',
+        isNew: true,
+        isHot: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn'
       }
     ]
   },

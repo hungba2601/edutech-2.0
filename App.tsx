@@ -1531,6 +1531,7 @@ const App: React.FC = () => {
         isOpen={isExcelKPIModalOpen}
         onClose={() => setIsExcelKPIModalOpen(false)}
         onLogin={() => handleLoginAction('tao-mau-excel-kpi')}
+        videoUrl={getVideoUrl('tao-mau-excel-kpi')}
       />
 
       <NotificationModal

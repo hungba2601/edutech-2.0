@@ -513,7 +513,8 @@ export const APP_CATEGORIES: Category[] = [
         isNew: true,
         isHot: true,
         buttonLabel: 'Đăng nhập',
-        secondaryLabel: 'Hướng dẫn'
+        secondaryLabel: 'Hướng dẫn',
+        videoUrl: 'https://youtu.be/hggu_SFcNxs'
       }
     ]
   },

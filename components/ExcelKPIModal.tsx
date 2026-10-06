@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, FileSpreadsheet, Sparkles, CheckCircle2, Zap, ArrowRight, TableProperties, BarChart3, SlidersHorizontal, Layers } from 'lucide-react';
+import { X, FileSpreadsheet, Sparkles, CheckCircle2, Zap, ArrowRight, TableProperties, BarChart3, SlidersHorizontal, Layers, PlayCircle } from 'lucide-react';
 
 interface ExcelKPIModalProps {
   isOpen: boolean;
@@ -11,7 +11,8 @@ interface ExcelKPIModalProps {
 export const ExcelKPIModal: React.FC<ExcelKPIModalProps> = ({ 
   isOpen, 
   onClose, 
-  onLogin 
+  onLogin,
+  videoUrl = 'https://youtu.be/hggu_SFcNxs'
 }) => {
   if (!isOpen) return null;
 
@@ -92,13 +93,26 @@ export const ExcelKPIModal: React.FC<ExcelKPIModalProps> = ({
               </div>
             </div>
           </div>
-          <button 
-            onClick={onClose}
-            className="p-2 hover:bg-white/20 rounded-full transition-all group relative z-10 text-white"
-            aria-label="Đóng"
-          >
-            <X className="w-6 h-6" />
-          </button>
+          <div className="flex items-center space-x-2 relative z-10">
+            {videoUrl && (
+              <a 
+                href={videoUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-1.5 px-3 py-1.5 sm:px-4 sm:py-2 bg-red-600 hover:bg-red-700 rounded-full text-white shadow-lg transition-all text-xs font-bold border border-white/20 uppercase tracking-wider hover:scale-105 active:scale-95"
+              >
+                <PlayCircle size={15} />
+                <span>Xem Video HD</span>
+              </a>
+            )}
+            <button 
+              onClick={onClose}
+              className="p-2 hover:bg-white/20 rounded-full transition-all group relative z-10 text-white"
+              aria-label="Đóng"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
         </div>
 
         {/* Content */}
@@ -183,7 +197,18 @@ export const ExcelKPIModal: React.FC<ExcelKPIModalProps> = ({
             </div>
           </div>
           
-          <div className="flex items-center space-x-3 w-full sm:w-auto">
+          <div className="flex items-center flex-wrap gap-2.5 sm:gap-3 w-full sm:w-auto">
+            {videoUrl && (
+              <a
+                href={videoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 sm:flex-none px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 active:scale-95 flex items-center justify-center space-x-2 uppercase tracking-wide text-xs sm:text-sm"
+              >
+                <PlayCircle size={17} />
+                <span>XEM VIDEO HD</span>
+              </a>
+            )}
             <button
               onClick={onClose}
               className="flex-1 sm:flex-none px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-bold transition-all"

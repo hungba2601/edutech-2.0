@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Volume2, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX, Music } from 'lucide-react';
 
 interface BackgroundMusicProps {
   isDarkMode: boolean;
 }
 
 export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) => {
-  // Mặc định luôn ở trạng thái MỞ nhạc
+  // Mặc định luôn ở trạng thái muốn MỞ nhạc
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [needsUserTap, setNeedsUserTap] = useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const userMutedRef = useRef<boolean>(false);
 
@@ -18,66 +19,81 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
     audio.volume = 0.35; // Âm lượng 35%
     audio.loop = true;
 
-    // Hàm thực hiện phát nhạc
-    const tryPlayAudio = () => {
+    // Mở khóa Web Audio API cho iOS / Zalo WebView
+    const unlockWebAudio = () => {
+      try {
+        const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        if (AudioContextClass) {
+          const ctx = new AudioContextClass();
+          if (ctx.state === 'suspended') {
+            ctx.resume();
+          }
+        }
+      } catch {
+        // bỏ qua lỗi nếu không hỗ trợ
+      }
+    };
+
+    // Hàm kích hoạt phát nhạc an toàn
+    const startPlayback = () => {
       if (userMutedRef.current || !audio) return;
-      
+      unlockWebAudio();
+
       const playPromise = audio.play();
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
             setIsPlaying(true);
+            setNeedsUserTap(false);
           })
           .catch(() => {
-            // Trình duyệt chặn autoplay khi chưa có cử chỉ người dùng
-            // Vẫn giữ trạng thái loa MỞ để tự động phát ngay ở cử chỉ tiếp theo
+            // Zalo In-App Browser hoặc trình duyệt di động chặn autoplay trước tương tác
             if (!userMutedRef.current) {
               setIsPlaying(true);
+              setNeedsUserTap(true);
             }
           });
       }
     };
 
-    // 1. Thử phát ngay lập tức khi mở trang
-    tryPlayAudio();
+    // 1. Thử phát ngay khi vừa tải trang
+    startPlayback();
 
-    // 2. Bắt tất cả các loại tương tác (click, chạm, cuộn trang, nhấn phím) để phát ngay
-    const handleUserInteraction = () => {
+    // 2. Lắng nghe các cử chỉ hợp lệ được iOS/Android WebView & Zalo chấp nhận (touchend, click)
+    const handleGesture = () => {
       if (!userMutedRef.current && audio.paused) {
-        tryPlayAudio();
+        startPlayback();
       }
     };
 
-    const interactionEvents = ['click', 'pointerdown', 'touchstart', 'touchend', 'keydown', 'scroll', 'wheel'];
-    interactionEvents.forEach(evt => {
-      window.addEventListener(evt, handleUserInteraction, { passive: true });
-    });
+    // Chỉ dùng 'touchend' và 'click' - KHÔNG dùng 'scroll' hay 'touchstart' vì iOS WebKit sẽ từ chối và chặn quyền media
+    window.addEventListener('touchend', handleGesture, { passive: true });
+    window.addEventListener('click', handleGesture, { passive: true });
 
-    // 3. Đảm bảo lặp lại vô tận (xử lý dự phòng nếu thuộc tính loop của trình duyệt gặp trục trặc)
-    const handleAudioEnded = () => {
-      if (!userMutedRef.current) {
+    // 3. Xử lý lặp lại dự phòng khi bài hát kết thúc
+    const handleEnded = () => {
+      if (!userMutedRef.current && audio) {
         audio.currentTime = 0;
-        tryPlayAudio();
+        audio.play().catch(() => {});
       }
     };
-    audio.addEventListener('ended', handleAudioEnded);
+    audio.addEventListener('ended', handleEnded);
 
-    // 4. Khi người dùng chuyển tab và quay lại, tự động tiếp tục phát nhạc nếu đang mở
-    const handleVisibilityChange = () => {
+    // 4. Khôi phục phát khi người dùng mở lại tab hoặc quay lại app Zalo
+    const handleVisibility = () => {
       if (document.visibilityState === 'visible' && !userMutedRef.current && audio.paused) {
-        tryPlayAudio();
+        startPlayback();
       }
     };
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('focus', handleVisibilityChange);
+    document.addEventListener('visibilitychange', handleVisibility);
+    window.addEventListener('focus', handleVisibility);
 
     return () => {
-      interactionEvents.forEach(evt => {
-        window.removeEventListener(evt, handleUserInteraction);
-      });
-      audio.removeEventListener('ended', handleAudioEnded);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('focus', handleVisibilityChange);
+      window.removeEventListener('touchend', handleGesture);
+      window.removeEventListener('click', handleGesture);
+      audio.removeEventListener('ended', handleEnded);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      window.removeEventListener('focus', handleVisibility);
     };
   }, []);
 
@@ -86,31 +102,45 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (isPlaying) {
+    if (isPlaying && !needsUserTap) {
       audio.pause();
       setIsPlaying(false);
+      setNeedsUserTap(false);
       userMutedRef.current = true;
     } else {
       userMutedRef.current = false;
       setIsPlaying(true);
+      setNeedsUserTap(false);
       audio.currentTime = audio.currentTime || 0;
-      audio.play().catch(err => {
+      audio.play().then(() => {
+        setIsPlaying(true);
+      }).catch(err => {
         console.error('Không thể phát nhạc:', err);
       });
     }
   };
 
   return (
-    <>
-      {/* Thẻ audio đặt trực tiếp trong DOM với autoPlay và loop giúp trình duyệt hỗ trợ tốt nhất */}
+    <div className="relative flex items-center">
+      {/* Thẻ audio chuẩn HTML5 hỗ trợ tốt trong WebKit / Zalo */}
       <audio
         ref={audioRef}
         src="/love-story.mp3"
-        autoPlay
         loop
         playsInline
         preload="auto"
       />
+
+      {/* Thông báo gợi ý nhỏ nhắn khi mở trong Zalo/trình duyệt bị chặn autoplay, chạm vào là phát ngay */}
+      {needsUserTap && isPlaying && (
+        <div 
+          onClick={toggleMusic}
+          className="absolute right-full mr-2 top-1/2 -translate-y-1/2 flex items-center space-x-1 px-2 py-1 rounded-full text-[10px] font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 shadow-md animate-bounce cursor-pointer whitespace-nowrap z-50 pointer-events-auto"
+        >
+          <Music className="w-3 h-3 animate-spin" />
+          <span>Chạm để bật nhạc 🎵</span>
+        </div>
+      )}
 
       <button
         onClick={toggleMusic}
@@ -138,6 +168,6 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
           <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         )}
       </button>
-    </>
+    </div>
   );
 };

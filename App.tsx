@@ -59,6 +59,7 @@ import { XepTkbProModal } from './components/XepTkbProModal';
 import { ExcelKPIModal } from './components/ExcelKPIModal';
 
 import { NotificationModal } from './components/NotificationModal';
+import { BackgroundMusic } from './components/BackgroundMusic';
 import { LayoutGrid, CreditCard, Youtube, Key, Sigma, Phone, FileCode, ClipboardList, Download, Sun, Moon, Table, FileSpreadsheet, PlayCircle, Code, FileText, ArrowRight, Video, Image, GraduationCap, Users, BookOpen, Target, Eye, Lock, EyeOff, Bell, CalendarDays, FileUp } from 'lucide-react';
 import { Category } from './types';
 import { fetchAppCounts, trackAppVisit, AppCounts, fetchPricingVisibility, savePricingVisibility, fetchNotification } from './services/tracking';
@@ -677,6 +678,9 @@ const App: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-end space-x-1 sm:space-x-3 w-full pl-0">
+            {/* Background Music Player */}
+            <BackgroundMusic isDarkMode={isDarkMode} />
+
             <div className="relative">
               <button 
                 onClick={() => {

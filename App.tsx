@@ -35,6 +35,7 @@ import { DailyInfoModal } from './components/DailyInfoModal';
 import { CryptoGuideModal } from './components/CryptoGuideModal';
 import { ExamShufflerModal } from './components/ExamShufflerModal';
 import { AutoCommentModal } from './components/AutoCommentModal';
+import { SoDauBaiModal } from './components/SoDauBaiModal';
 import { PrintProModal } from './components/PrintProModal';
 import { SgkSummaryModal } from './components/SgkSummaryModal';
 import { ProverbGameModal } from './components/ProverbGameModal';
@@ -183,6 +184,7 @@ const App: React.FC = () => {
   const [isCryptoGuideModalOpen, setIsCryptoGuideModalOpen] = useState(false);
   const [isExamShufflerModalOpen, setIsExamShufflerModalOpen] = useState(false);
   const [isAutoCommentModalOpen, setIsAutoCommentModalOpen] = useState(false);
+  const [isSoDauBaiModalOpen, setIsSoDauBaiModalOpen] = useState(false);
   const [isPrintProModalOpen, setIsPrintProModalOpen] = useState(false);
   const [isSgkSummaryModalOpen, setIsSgkSummaryModalOpen] = useState(false);
   const [isProverbGameModalOpen, setIsProverbGameModalOpen] = useState(false);
@@ -284,6 +286,7 @@ const App: React.FC = () => {
     setIsCryptoGuideModalOpen(false);
     setIsExamShufflerModalOpen(false);
     setIsAutoCommentModalOpen(false);
+    setIsSoDauBaiModalOpen(false);
     setIsPrintProModalOpen(false);
     setIsSgkSummaryModalOpen(false);
     setIsProverbGameModalOpen(false);
@@ -389,6 +392,8 @@ const App: React.FC = () => {
       setIsExamShufflerModalOpen(true);
     } else if (id === 'auto-comment-utility') {
       setIsAutoCommentModalOpen(true);
+    } else if (id === 'so-dau-bai-utility') {
+      setIsSoDauBaiModalOpen(true);
     } else if (id === 'print-pro') {
       setIsPrintProModalOpen(true);
     } else if (id === 'sgk-summary') {
@@ -467,6 +472,7 @@ const App: React.FC = () => {
       'daily-info': 'https://daily-infor.vercel.app/',
       'exam-shuffler-ai': 'https://tronde-ai.vercel.app/',
       'auto-comment-utility': 'https://drive.google.com/drive/folders/1_DJhTufNUvtf4-imdZglU59sqS7Rj7-D?usp=sharing',
+      'so-dau-bai-utility': 'https://drive.google.com/drive/folders/1n9eA47juTu--4k3KlyjIbcFgPBWqyUJk?usp=sharing',
       'print-pro': 'https://congcu-inan-pro.vercel.app/',
       'sgk-summary': 'https://tomtat-baihoc.vercel.app/',
       'guess-proverb-game': 'https://game-cadao-tucngu.vercel.app/',
@@ -1421,6 +1427,12 @@ const App: React.FC = () => {
         onClose={() => setIsAutoCommentModalOpen(false)}
         onDownload={() => handleLoginAction('auto-comment-utility')}
         videoUrl={getVideoUrl('auto-comment-utility') || "https://youtube.com"}
+      />
+      <SoDauBaiModal
+        isOpen={isSoDauBaiModalOpen}
+        onClose={() => setIsSoDauBaiModalOpen(false)}
+        onDownload={() => handleLoginAction('so-dau-bai-utility')}
+        videoUrl={getVideoUrl('so-dau-bai-utility') || "https://youtube.com"}
       />
       <PrintProModal
         isOpen={isPrintProModalOpen}

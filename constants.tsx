@@ -316,6 +316,17 @@ export const APP_CATEGORIES: Category[] = [
         videoUrl: 'https://youtu.be/nYbso-lv6Nk'
       },
       {
+        id: 'so-dau-bai-utility',
+        title: 'TIỆN ÍCH NHẬN XÉT SỔ ĐẦU BÀI TỰ ĐỘNG NHANH CHÓNG ,TIỆN LỢI',
+        icon: <BookOpenCheck className="w-8 h-8" />,
+        color: 'bg-amber-600',
+        description: 'TIỆN ÍCH GIÚP NHẬN XÉT SĐB NHANH CHÓNG ,TIỆN LỢI',
+        isNew: true,
+        buttonLabel: 'Tải tiện ích',
+        secondaryLabel: 'Hướng dẫn',
+        videoUrl: 'https://youtube.com'
+      },
+      {
         id: 'print-pro',
         title: 'CÔNG CỤ HỖ TRỢ IN ẤN PRO',
         icon: <Printer className="w-8 h-8" />,

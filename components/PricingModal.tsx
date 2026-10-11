@@ -42,7 +42,8 @@ export const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose }) =
               { id: 5, text: "TOOL VIẾT BIỆN PHÁP + SKKN + THẨM ĐỊNH / HOÀN CHỈNH", price: "199K" },
               { id: 6, text: "APP THẨM ĐỊNH + TỰ ĐỘNG CHỈNH SỬA SKKN", price: "ĐƯỢC TẶNG KHI MUA \" TOOL VIẾT BIỆN PHÁP + SKKN...\"" },
               { id: 7, text: "TIỆN ÍCH TỰ ĐỘNG GIẢI TN+TL TRÊN CÁC TRANG WEB", price: "99K" },
-              { id: 8, text: "TIỆN ÍCH AUTO NHẬN XÉT CÁC MÔN HỌC", price: "99K" }
+              { id: 8, text: "TIỆN ÍCH AUTO NHẬN XÉT CÁC MÔN HỌC", price: "99K" },
+              { id: 9, text: "TIỆN ÍCH NHẬN XÉT SỔ ĐẦU BÀI (SĐB)", price: "99K" }
             ].map((item) => (
               <div key={item.id} className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 group hover:border-green-200 dark:hover:border-green-800 hover:bg-green-50/30 dark:hover:bg-green-900/20 transition-all">
                 <div className="flex items-start space-x-3 flex-1">

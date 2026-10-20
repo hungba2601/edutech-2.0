@@ -58,6 +58,7 @@ import { KHGDPhuLucModal } from './components/KHGDPhuLucModal';
 import { GiaSuTinHocModal } from './components/GiaSuTinHocModal';
 import { XepTkbProModal } from './components/XepTkbProModal';
 import { ExcelKPIModal } from './components/ExcelKPIModal';
+import { OnlineExamModal } from './components/OnlineExamModal';
 
 import { NotificationModal } from './components/NotificationModal';
 import { BackgroundMusic } from './components/BackgroundMusic';
@@ -206,6 +207,7 @@ const App: React.FC = () => {
   const [isGiaSuTinHocModalOpen, setIsGiaSuTinHocModalOpen] = useState(false);
   const [isXepTkbProModalOpen, setIsXepTkbProModalOpen] = useState(false);
   const [isExcelKPIModalOpen, setIsExcelKPIModalOpen] = useState(false);
+  const [isOnlineExamModalOpen, setIsOnlineExamModalOpen] = useState(false);
 
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const [notificationText, setNotificationText] = useState("");
@@ -308,6 +310,7 @@ const App: React.FC = () => {
     setIsGiaSuTinHocModalOpen(false);
     setIsXepTkbProModalOpen(false);
     setIsExcelKPIModalOpen(false);
+    setIsOnlineExamModalOpen(false);
 
     setIsNotificationModalOpen(false);
   };
@@ -432,6 +435,8 @@ const App: React.FC = () => {
       setIsXepTkbProModalOpen(true);
     } else if (id === 'tao-mau-excel-kpi') {
       setIsExcelKPIModalOpen(true);
+    } else if (id === 'online-exam-system') {
+      setIsOnlineExamModalOpen(true);
     }
   };
 
@@ -491,7 +496,8 @@ const App: React.FC = () => {
       'tool-tao-khgd': 'https://tool-tao-khgd-ai.vercel.app/',
       'gia-su-tin-hoc-thcs': 'https://giasu-tinhoc-ai.vercel.app/',
       'xep-tkb-pro-2': 'https://tkbpro20.vercel.app/',
-      'tao-mau-excel-kpi': 'https://kpi-nph.vercel.app/'
+      'tao-mau-excel-kpi': 'https://kpi-nph.vercel.app/',
+      'online-exam-system': 'https://edutest-nph.vercel.app/'
     };
 
     if (links[id]) {
@@ -1548,6 +1554,12 @@ const App: React.FC = () => {
         onClose={() => setIsExcelKPIModalOpen(false)}
         onLogin={() => handleLoginAction('tao-mau-excel-kpi')}
         videoUrl={getVideoUrl('tao-mau-excel-kpi')}
+      />
+      <OnlineExamModal
+        isOpen={isOnlineExamModalOpen}
+        onClose={() => setIsOnlineExamModalOpen(false)}
+        onLogin={() => handleLoginAction('online-exam-system')}
+        videoUrl={getVideoUrl('online-exam-system')}
       />
 
       <NotificationModal

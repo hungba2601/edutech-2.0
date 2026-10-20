@@ -32,7 +32,8 @@ import {
   Image,
   Video,
   Code,
-  CalendarDays
+  CalendarDays,
+  ClipboardCheck
 } from 'lucide-react';
 import { Category } from './types';
 
@@ -150,6 +151,16 @@ export const APP_CATEGORIES: Category[] = [
         buttonLabel: 'Đăng nhập',
         secondaryLabel: 'Hướng dẫn',
         videoUrl: 'https://youtu.be/ocs87GCFza0'
+      },
+      {
+        id: 'online-exam-system',
+        title: 'HỆ THỐNG KIỂM TRA ONLINE CHO HS VÀ GIÁO VIÊN',
+        icon: <ClipboardCheck className="w-8 h-8" />,
+        color: 'bg-emerald-600',
+        description: 'HỆ THỐNG KIỂM TRA ONLINE CHO HS & GV CÓ LƯU LẠI DỮ LIỆU BÀI LÀM LÊN GOOGLE SHEET GIÚP QUẢN LÝ VÀ TRA CỨU KHI CẦN .',
+        isNew: true,
+        buttonLabel: 'Đăng nhập',
+        secondaryLabel: 'Hướng dẫn'
       }
     ]
   },

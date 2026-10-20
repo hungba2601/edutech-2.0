@@ -1,0 +1,230 @@
+import React from 'react';
+import { X, ClipboardCheck, Sparkles, CheckCircle2, FileSpreadsheet, ArrowRight, PlayCircle, ShieldCheck, BarChart3, Users, Laptop, Database } from 'lucide-react';
+
+interface OnlineExamModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onLogin: () => void;
+  videoUrl?: string;
+}
+
+export const OnlineExamModal: React.FC<OnlineExamModalProps> = ({ 
+  isOpen, 
+  onClose, 
+  onLogin,
+  videoUrl
+}) => {
+  if (!isOpen) return null;
+
+  const features = [
+    {
+      icon: <Database className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />,
+      bg: "bg-emerald-100 dark:bg-emerald-900/30",
+      title: "Lưu Trữ Dữ Liệu Lên Google Sheet",
+      description: "Mọi bài làm của học sinh (họ tên, lớp, câu trả lời, thời gian nộp, điểm số) được ghi nhận tự động vào Google Sheet theo thời gian thực."
+    },
+    {
+      icon: <Sparkles className="w-5 h-5 text-teal-600 dark:text-teal-400" />,
+      bg: "bg-teal-100 dark:bg-teal-900/30",
+      title: "Chấm Điểm & Phản Hồi Tức Thì",
+      description: "Hệ thống tự động chấm điểm bài trắc nghiệm ngay khi học sinh bấm nộp bài, cho phép hiển thị đáp án và lời giải chi tiết giúp học sinh tự đánh giá."
+    },
+    {
+      icon: <BarChart3 className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />,
+      bg: "bg-cyan-100 dark:bg-cyan-900/30",
+      title: "Tra Cứu & Thống Kê Điểm Số Nhanh",
+      description: "Giáo viên dễ dàng lọc điểm theo lớp, thống kê phổ điểm, tỷ lệ đúng/sai từng câu để điều chỉnh phương pháp giảng dạy kịp thời."
+    },
+    {
+      icon: <ShieldCheck className="w-5 h-5 text-amber-600 dark:text-amber-400" />,
+      bg: "bg-amber-100 dark:bg-amber-900/30",
+      title: "Chống Gian Lận & Giám Sát Làm Bài",
+      description: "Tự động đảo vị trí câu hỏi và đáp án cho từng học sinh, ghi nhận số lần chuyển đổi tab hoặc rời khỏi màn hình làm bài kiểm tra."
+    }
+  ];
+
+  const steps = [
+    {
+      step: "01",
+      title: "Đăng nhập hệ thống",
+      desc: "Bấm nút 'ĐĂNG NHẬP APP' bên dưới để truy cập trực tiếp vào hệ thống kiểm tra tại edutest-nph.vercel.app."
+    },
+    {
+      step: "02",
+      title: "Tạo bài thi & kết nối Google Sheet",
+      desc: "Giáo viên tải đề thi lên hoặc chọn từ ngân hàng đề, gắn link Google Sheet để nhận kết quả bài làm tự động."
+    },
+    {
+      step: "03",
+      title: "Học sinh làm bài & Nộp kết quả",
+      desc: "Học sinh truy cập link bài thi trên máy tính, điện thoại hoặc máy tính bảng để làm bài trực tuyến thuận tiện."
+    },
+    {
+      step: "04",
+      title: "Quản lý & Tra cứu kết quả",
+      desc: "Kết quả được lưu tức thì lên Google Sheet, giúp giáo viên tra cứu mọi lúc mọi nơi và xuất file báo cáo tiện lợi."
+    }
+  ];
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity">
+      <div 
+        className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300 border border-slate-100 dark:border-slate-800"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 p-6 sm:p-8 flex items-center justify-between text-white relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
+            <ClipboardCheck className="w-36 h-36 rotate-12" />
+          </div>
+          <div className="flex items-center space-x-4 relative z-10">
+            <div className="bg-white/20 p-3.5 rounded-2xl backdrop-blur-md border border-white/30 shadow-inner">
+              <ClipboardCheck className="w-8 h-8 text-emerald-100" />
+            </div>
+            <div>
+              <h2 className="text-lg sm:text-2xl font-black font-outfit uppercase tracking-tight leading-tight text-white drop-shadow-sm">
+                HỆ THỐNG KIỂM TRA ONLINE CHO HS & GV
+              </h2>
+              <div className="flex items-center space-x-2 mt-1.5 flex-wrap gap-y-1">
+                <span className="bg-red-500 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase shadow-sm animate-pulse tracking-wider">
+                  NEW
+                </span>
+                <span className="bg-emerald-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase shadow-sm tracking-wider">
+                  GOOGLE SHEET TỰ ĐỘNG
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center space-x-2 relative z-10">
+            {videoUrl && (
+              <a 
+                href={videoUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-1.5 px-3 py-1.5 sm:px-4 sm:py-2 bg-red-600 hover:bg-red-700 rounded-full text-white shadow-lg transition-all text-xs font-bold border border-white/20 uppercase tracking-wider hover:scale-105 active:scale-95"
+              >
+                <PlayCircle size={15} />
+                <span>Video HD</span>
+              </a>
+            )}
+            <button 
+              onClick={onClose}
+              className="p-2 hover:bg-white/20 rounded-full transition-all group relative z-10 text-white"
+              aria-label="Đóng"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+
+        {/* Content Body */}
+        <div className="overflow-y-auto p-6 sm:p-8 space-y-6 max-h-[calc(90vh-180px)]">
+          {/* Giới thiệu tổng quan */}
+          <div className="p-4 sm:p-5 rounded-2xl border border-emerald-200 dark:border-emerald-900/50 bg-emerald-50/70 dark:bg-emerald-950/20">
+            <div className="flex items-center space-x-2 text-emerald-800 dark:text-emerald-400 font-bold mb-2">
+              <FileSpreadsheet className="w-5 h-5 flex-shrink-0" />
+              <span className="text-sm sm:text-base">Mô Tả Hệ Thống Kiểm Tra Trực Tuyến</span>
+            </div>
+            <p className="text-slate-700 dark:text-slate-200 text-xs sm:text-sm leading-relaxed text-justify font-medium">
+              Hệ thống kiểm tra trực tuyến được thiết kế chuyên biệt cho <strong>Học sinh & Giáo viên</strong>. Điểm vượt trội là khả năng <strong>tự động lưu toàn bộ dữ liệu bài làm lên Google Sheet</strong>, giúp Thầy Cô dễ dàng quản lý, đối soát và tra cứu bài làm của học sinh mọi lúc mọi nơi mà không lo thất lạc dữ liệu.
+            </p>
+          </div>
+
+          {/* Grid tính năng nổi bật */}
+          <div>
+            <h4 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-3 flex items-center space-x-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>Tính năng nổi bật của hệ thống</span>
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              {features.map((item, idx) => (
+                <div 
+                  key={idx} 
+                  className="p-4 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all hover:shadow-md"
+                >
+                  <div className="flex items-start space-x-3">
+                    <div className={`p-2.5 rounded-xl ${item.bg} flex-shrink-0`}>
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h5 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm mb-1">
+                        {item.title}
+                      </h5>
+                      <p className="text-[11px] sm:text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Quy trình sử dụng */}
+          <div>
+            <h4 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-3 flex items-center space-x-2">
+              <span className="w-2 h-2 rounded-full bg-teal-500"></span>
+              <span>Quy trình làm bài & quản trị</span>
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              {steps.map((st, idx) => (
+                <div 
+                  key={idx}
+                  className="relative p-4 rounded-2xl bg-gradient-to-b from-slate-50 to-slate-100/50 dark:from-slate-800/60 dark:to-slate-800/30 border border-slate-200/60 dark:border-slate-700/60"
+                >
+                  <span className="text-2xl font-black font-outfit text-emerald-600/30 dark:text-emerald-400/30 block mb-1">
+                    {st.step}
+                  </span>
+                  <h6 className="font-bold text-slate-900 dark:text-white text-xs mb-1">
+                    {st.title}
+                  </h6>
+                  <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-normal">
+                    {st.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="p-6 sm:p-8 border-t border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col text-center sm:text-left">
+            <span className="text-slate-400 dark:text-slate-500 text-[10px] uppercase font-bold tracking-widest mb-0.5">Trạng thái</span>
+            <div className="flex items-center justify-center sm:justify-start space-x-2">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+              <span className="text-emerald-700 dark:text-emerald-400 text-xs font-bold uppercase tracking-wide">Sẵn sàng sử dụng</span>
+            </div>
+          </div>
+          
+          <div className="flex items-center flex-wrap gap-2.5 sm:gap-3 w-full sm:w-auto">
+            {videoUrl && (
+              <a
+                href={videoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 sm:flex-none px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 active:scale-95 flex items-center justify-center space-x-2 uppercase tracking-wide text-xs sm:text-sm"
+              >
+                <PlayCircle size={17} />
+                <span>XEM VIDEO HD</span>
+              </a>
+            )}
+            <button
+              onClick={onClose}
+              className="flex-1 sm:flex-none px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-bold transition-all"
+            >
+              Đóng
+            </button>
+            <button 
+              onClick={onLogin}
+              className="flex-1 sm:flex-none px-8 py-3.5 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700 text-white font-black rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all hover:-translate-y-0.5 active:scale-95 flex items-center justify-center space-x-2 uppercase tracking-wide text-sm group"
+            >
+              <span>ĐĂNG NHẬP APP</span>
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

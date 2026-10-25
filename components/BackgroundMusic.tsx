@@ -34,6 +34,7 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
     if (!audio) return;
 
     audio.volume = 0.35; // Âm lượng 35%
+    audio.loop = true;
 
     // Mở khóa Web Audio API cho iOS / Zalo WebView
     const unlockWebAudio = () => {
@@ -86,15 +87,12 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
     window.addEventListener('touchend', handleGesture, { passive: true });
     window.addEventListener('click', handleGesture, { passive: true });
 
-    // 3. Tự động chuyển bài tiếp theo khi bài hát hiện tại kết thúc
+    // 3. Xử lý lặp lại dự phòng khi bài hát hiện tại kết thúc (lặp lại chính bài đó)
     const handleEnded = () => {
-      if (userMutedRef.current || !audio) return;
-      const nextIdx = (currentTrackIndexRef.current + 1) % PLAYLIST.length;
-      setCurrentTrackIndex(nextIdx);
-      currentTrackIndexRef.current = nextIdx;
-      audio.src = PLAYLIST[nextIdx].src;
-      audio.load();
-      audio.play().catch(() => {});
+      if (!userMutedRef.current && audio) {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      }
     };
     audio.addEventListener('ended', handleEnded);
 
@@ -149,6 +147,7 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
       <audio
         ref={audioRef}
         src={currentTrack.src}
+        loop
         playsInline
         preload="auto"
       />

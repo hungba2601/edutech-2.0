@@ -5,7 +5,24 @@ interface BackgroundMusicProps {
   isDarkMode: boolean;
 }
 
+interface Track {
+  title: string;
+  src: string;
+}
+
+const PLAYLIST: Track[] = [
+  { title: 'Love Story', src: '/love-story.mp3' },
+  { title: 'Sealed With A Kiss', src: '/sealed-with-a-kiss.m4a' },
+];
+
 export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) => {
+  // Chọn ngẫu nhiên 1 trong 2 bản nhạc mỗi lần mở trang
+  const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(() =>
+    Math.floor(Math.random() * PLAYLIST.length)
+  );
+  const currentTrackIndexRef = useRef<number>(currentTrackIndex);
+  currentTrackIndexRef.current = currentTrackIndex;
+
   // Mặc định luôn ở trạng thái muốn MỞ nhạc
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [needsUserTap, setNeedsUserTap] = useState<boolean>(false);
@@ -17,7 +34,6 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
     if (!audio) return;
 
     audio.volume = 0.35; // Âm lượng 35%
-    audio.loop = true;
 
     // Mở khóa Web Audio API cho iOS / Zalo WebView
     const unlockWebAudio = () => {
@@ -70,12 +86,15 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
     window.addEventListener('touchend', handleGesture, { passive: true });
     window.addEventListener('click', handleGesture, { passive: true });
 
-    // 3. Xử lý lặp lại dự phòng khi bài hát kết thúc
+    // 3. Tự động chuyển bài tiếp theo khi bài hát hiện tại kết thúc
     const handleEnded = () => {
-      if (!userMutedRef.current && audio) {
-        audio.currentTime = 0;
-        audio.play().catch(() => {});
-      }
+      if (userMutedRef.current || !audio) return;
+      const nextIdx = (currentTrackIndexRef.current + 1) % PLAYLIST.length;
+      setCurrentTrackIndex(nextIdx);
+      currentTrackIndexRef.current = nextIdx;
+      audio.src = PLAYLIST[nextIdx].src;
+      audio.load();
+      audio.play().catch(() => {});
     };
     audio.addEventListener('ended', handleEnded);
 
@@ -111,7 +130,9 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
       userMutedRef.current = false;
       setIsPlaying(true);
       setNeedsUserTap(false);
-      audio.currentTime = audio.currentTime || 0;
+      if (!audio.src) {
+        audio.src = PLAYLIST[currentTrackIndexRef.current].src;
+      }
       audio.play().then(() => {
         setIsPlaying(true);
       }).catch(err => {
@@ -120,13 +141,14 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
     }
   };
 
+  const currentTrack = PLAYLIST[currentTrackIndex];
+
   return (
     <div className="relative flex items-center">
       {/* Thẻ audio chuẩn HTML5 hỗ trợ tốt trong WebKit / Zalo */}
       <audio
         ref={audioRef}
-        src="/love-story.mp3"
-        loop
+        src={currentTrack.src}
         playsInline
         preload="auto"
       />
@@ -138,7 +160,7 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
           className="absolute right-full mr-2 top-1/2 -translate-y-1/2 flex items-center space-x-1 px-2 py-1 rounded-full text-[10px] font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 shadow-md animate-bounce cursor-pointer whitespace-nowrap z-50 pointer-events-auto"
         >
           <Music className="w-3 h-3 animate-spin" />
-          <span>Chạm để bật nhạc 🎵</span>
+          <span>Chạm để bật nhạc ({currentTrack.title}) 🎵</span>
         </div>
       )}
 
@@ -153,8 +175,8 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
               ? 'bg-slate-800 text-slate-400 hover:text-slate-200'
               : 'bg-slate-100 text-slate-500 hover:text-slate-800'
         }`}
-        title={isPlaying ? "Tắt nhạc nền (Love Story)" : "Bật nhạc nền (Love Story)"}
-        aria-label="Điều khiển nhạc nền"
+        title={isPlaying ? `Tắt nhạc nền (${currentTrack.title})` : `Bật nhạc nền (${currentTrack.title})`}
+        aria-label={`Điều khiển nhạc nền - đang phát ${currentTrack.title}`}
       >
         {isPlaying ? (
           <>

@@ -10,6 +10,7 @@ interface Track {
   artist: string;
   tag: string;
   src: string;
+  defaultVolume: number;
 }
 
 const PLAYLIST: Track[] = [
@@ -18,18 +19,21 @@ const PLAYLIST: Track[] = [
     artist: 'Barbra Streisand',
     tag: 'Du dương',
     src: '/woman-in-love.mp3',
+    defaultVolume: 50,
   },
   {
     title: 'Love Story',
     artist: 'Francis Lai',
     tag: 'Lãng mạn',
     src: '/love-story.mp3',
+    defaultVolume: 30,
   },
   {
     title: 'Sealed With A Kiss',
     artist: 'Brian Hyland',
     tag: 'Nhẹ nhàng',
     src: '/sealed-with-a-kiss.m4a',
+    defaultVolume: 30,
   },
 ];
 
@@ -48,16 +52,18 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
   const currentTrackIndexRef = useRef<number>(currentTrackIndex);
   currentTrackIndexRef.current = currentTrackIndex;
 
-  // Trạng thái phát và âm lượng mặc định 30%
+  // Trạng thái phát và âm lượng theo bài hát (Woman in Love: 50%, các bài khác: 30%)
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
-  const [volume, setVolume] = useState<number>(30);
+  const [volume, setVolume] = useState<number>(
+    () => PLAYLIST[currentTrackIndex]?.defaultVolume ?? 30
+  );
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
   const [needsUserTap, setNeedsUserTap] = useState<boolean>(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const userMutedRef = useRef<boolean>(false);
-  const prevVolumeRef = useRef<number>(30);
+  const prevVolumeRef = useRef<number>(PLAYLIST[currentTrackIndex]?.defaultVolume ?? 30);
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -95,7 +101,8 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
     const audio = audioRef.current;
     if (!audio) return;
 
-    audio.volume = 0.3; // Mặc định 30%
+    const initialVol = PLAYLIST[currentTrackIndexRef.current]?.defaultVolume ?? 30;
+    audio.volume = initialVol / 100;
     audio.loop = true;
 
     // Mở khóa Web Audio API cho iOS / Zalo WebView
@@ -188,7 +195,8 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
   const toggleMute = () => {
     const audio = audioRef.current;
     if (isMuted || volume === 0) {
-      const restored = prevVolumeRef.current > 0 ? prevVolumeRef.current : 30;
+      const defaultVol = PLAYLIST[currentTrackIndexRef.current]?.defaultVolume ?? 30;
+      const restored = prevVolumeRef.current > 0 ? prevVolumeRef.current : defaultVol;
       setVolume(restored);
       setIsMuted(false);
       if (audio) audio.volume = restored / 100;
@@ -237,9 +245,16 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isDarkMode }) 
     setCurrentTrackIndex(nextIndex);
     currentTrackIndexRef.current = nextIndex;
 
+    const nextTrack = PLAYLIST[nextIndex];
+    const newVolume = nextTrack.defaultVolume ?? 30;
+    setVolume(newVolume);
+    setIsMuted(false);
+    prevVolumeRef.current = newVolume;
+
     const audio = audioRef.current;
     if (audio) {
-      audio.src = PLAYLIST[nextIndex].src;
+      audio.src = nextTrack.src;
+      audio.volume = newVolume / 100;
       audio.currentTime = 0;
       userMutedRef.current = false;
       audio
